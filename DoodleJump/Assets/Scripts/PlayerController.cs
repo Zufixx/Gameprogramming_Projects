@@ -13,15 +13,10 @@ public class PlayerController : MonoBehaviour {
     private Vector2 rayOrigin;
     private Vector2 rayDirection;
     private float rayDistance;
-    private int rayMask;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-
-        rayDirection = -Vector2.up;
-        rayDistance = 10000.0f;
-        rayMask = 2;
     }
 	
 	// Update is called once per frame
@@ -34,20 +29,33 @@ public class PlayerController : MonoBehaviour {
         {
             rb.velocity = new Vector2(0.0f, jumpHeight);
         }
-	}
+        rayOrigin = transform.position - new Vector3(0.0f, 0.4f, 0.0f);
+
+        if(transform.position.x >= 3.15f)
+        {
+            transform.position = new Vector2(-3.14f, transform.position.y);
+        }
+        else if (transform.position.x <= -3.15f)
+        {
+            transform.position = new Vector2(3.14f, transform.position.y);
+        }
+    }
 
     private void FixedUpdate()
     {
-        rayOrigin = transform.position;
+        rayDirection = -Vector2.up;
+        rayDistance = 0.02f;
 
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, rayMask);
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
         Color color = hit ? Color.green : Color.red;
         Debug.DrawRay(rayOrigin, rayDirection, color);
 
-        if (hit.collider != null)
+        //Debug.Log(hit);
+
+        if (hit.collider != null && rb.velocity.y <= 0.0f)
         {
-            rb.velocity = new Vector2(0.0f, jumpHeight);
-            Debug.Log("A hit!");
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+            //Debug.Log("A hit!");
         }
     }
 }

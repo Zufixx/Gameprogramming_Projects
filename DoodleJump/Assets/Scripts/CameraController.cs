@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public GameObject player;
+    [SerializeField]
+    private PlayerController playerController;
+    [SerializeField]
+    private GameManager gameManager;
+
+    private float distance;
 
 	// Use this for initialization
 	void Start () {
@@ -13,16 +18,27 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float distance = player.transform.position.y - transform.position.y;
+
+	}
+
+    private void FixedUpdate()
+    {
+        distance = playerController.GetMaxHeight() - transform.position.y + 1.0f;
 
         if (distance > 0)
         {
-            transform.Translate(new Vector3(0.0f, distance / 60f, 0.0f), Space.Self);
+            transform.Translate(new Vector3(0.0f, distance / 30f, 0.0f), Space.Self);
         }
 
         if (distance < -5)
         {
             Debug.Log("Game Over");
+            gameManager.GameOver();
         }
-	}
+    }
+
+    public float GetDistance()
+    {
+        return distance;
+    }
 }

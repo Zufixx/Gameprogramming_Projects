@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour {
     private Vector2 rayDirection;
     private float rayDistance;
 
+    [SerializeField]
+    private float maxHeight;
+
+    [SerializeField]
+    private PlatformManager platformManager;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -21,17 +27,30 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Movement forces
         moveHorizontal = Input.GetAxisRaw("Horizontal");
         Vector2 movement = new Vector2(moveHorizontal, 0.0f);
         rb.AddForce(movement * speed);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        // Flip character when moving side to side
+        if (Input.GetAxisRaw("Horizontal") > 0.1f)
+        {
+            gameObject.transform.localRotation = new Quaternion(0f, 180f, 0f, 0f);
+        }
+        else if (Input.GetAxisRaw("Horizontal") < -0.1f)
+        {
+            gameObject.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
+
+        /* Jumping
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = new Vector2(0.0f, jumpHeight);
         }
-        rayOrigin = transform.position - new Vector3(0.0f, 0.4f, 0.0f);
+        */
 
-        if(transform.position.x >= 3.15f)
+        // Teleport from side to side
+        if (transform.position.x >= 3.15f)
         {
             transform.position = new Vector2(-3.14f, transform.position.y);
         }
@@ -39,23 +58,50 @@ public class PlayerController : MonoBehaviour {
         {
             transform.position = new Vector2(3.14f, transform.position.y);
         }
+
+        // Set max height
+        if (maxHeight < transform.position.y)
+            maxHeight = transform.position.y;
     }
 
     private void FixedUpdate()
     {
+        // Raycasting variables
+        rayOrigin = transform.position;
+        //rayOrigin = transform.position - new Vector3(0.0f, 0.4f, 0.0f);
         rayDirection = -Vector2.up;
-        rayDistance = 0.02f;
+        rayDistance = 0.42f;
+        LayerMask layer = 1 << 0;
 
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+        // Shoot ray down from player
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, layer);
+
+        // Debug Drawing
         Color color = hit ? Color.green : Color.red;
         Debug.DrawRay(rayOrigin, rayDirection, color);
 
         //Debug.Log(hit);
 
+        // If it hits a platform
         if (hit.collider != null && rb.velocity.y <= 0.0f)
         {
+            Platform platform = hit.transform.gameObject.GetComponent<Platform>();
+
+            if (platform.type == Platform.types.FRAGILE)
+            {
+                platformManager.RespawnPlatform(hit.transform.gameObject);
+                return;
+            }
+
+            // Jump with the height set on the platform
+            jumpHeight = platform.GetJumpHeight();
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             //Debug.Log("A hit!");
         }
+    }
+
+    public float GetMaxHeight()
+    {
+        return maxHeight;
     }
 }

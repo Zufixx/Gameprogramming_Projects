@@ -6,10 +6,9 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField]
     private PlayerController playerController;
-    [SerializeField]
-    private GameManager gameManager;
 
     private float distance;
+    private float trueDistance;
 
 	// Use this for initialization
 	void Start () {
@@ -30,11 +29,13 @@ public class CameraController : MonoBehaviour {
             transform.Translate(new Vector3(0.0f, distance / 30f, 0.0f), Space.Self);
         }
 
-        if (distance < -5)
         {
             Debug.Log("Game Over");
             gameManager.GameOver();
         }
+        trueDistance = playerController.transform.position.y - transform.position.y;
+        if (trueDistance < -5)
+            GameManager.instance.GameOver();
     }
 
     public float GetDistance()

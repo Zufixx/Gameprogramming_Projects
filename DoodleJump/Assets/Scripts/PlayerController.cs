@@ -89,13 +89,17 @@ public class PlayerController : MonoBehaviour {
 
             if (platform.type == Platform.types.FRAGILE)
             {
-                platformManager.RespawnPlatform(hit.transform.gameObject);
+                Destroy(platform.gameObject);
                 return;
             }
+            else
+            {
+                // Jump with the height set on the platform
+                jumpHeight = platform.GetJumpHeight();
+                rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+            }
 
-            // Jump with the height set on the platform
-            jumpHeight = platform.GetJumpHeight();
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+
             //Debug.Log("A hit!");
         }
     }
@@ -103,5 +107,11 @@ public class PlayerController : MonoBehaviour {
     public float GetMaxHeight()
     {
         return maxHeight;
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.transform.tag == "Boundary")
+            GameManager.instance.GameOver();
     }
 }

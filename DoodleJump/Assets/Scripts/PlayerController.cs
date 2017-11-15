@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private PlatformManager platformManager;
 
+    [SerializeField]
+    private GameObject bullet;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -62,6 +65,11 @@ public class PlayerController : MonoBehaviour {
         // Set max height
         if (maxHeight < transform.position.y)
             maxHeight = transform.position.y;
+
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(bullet, transform.position, Quaternion.identity);
+        }
     }
 
     private void FixedUpdate()

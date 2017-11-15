@@ -34,7 +34,7 @@ public class Platform : MonoBehaviour {
             case 0: case 1: case 2: case 3:
                 type = types.STANDARD;
                 jumpHeight = 10f;
-                sr.color = Color.white;
+                sr.color = Color.green;
                 break;
             case 4:
                 type = types.FRAGILE;
@@ -45,13 +45,13 @@ public class Platform : MonoBehaviour {
                 type = types.MOVINGX;
                 jumpHeight = 10f;
                 sr.color = Color.blue;
-                xSpeed = 0.01f;
+                xSpeed = 0.02f;
                 break;
             case 6:
                 type = types.MOVINGY;
                 jumpHeight = 10f;
                 sr.color = Color.cyan;
-                ySpeed = 0.01f;
+                ySpeed = 0.02f;
                 break;
             case 7:
                 type = types.HIGHJUMP;
@@ -71,7 +71,7 @@ public class Platform : MonoBehaviour {
 
             if (moveInterval > 0)
             {
-                transform.Translate(movement, Space.Self);
+                transform.Translate(movement * Time.deltaTime, Space.Self);
             }
             else if (moveInterval <= 0)
             {

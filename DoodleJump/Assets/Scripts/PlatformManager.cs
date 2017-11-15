@@ -45,11 +45,11 @@ public class PlatformManager : MonoBehaviour {
         platformScript.Initialize(rng);
 
         if (rng == 4)
-            platformY += 1.0f;
+            platformY += 0.5f;
         else if (rng == 7)
-            platformY += 3.0f;
-        else
             platformY += 2.0f;
+        else
+            platformY += 1.0f;
 
         prevRng = rng;
 

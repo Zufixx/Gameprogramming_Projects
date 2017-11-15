@@ -26,13 +26,9 @@ public class CameraController : MonoBehaviour {
 
         if (distance > 0)
         {
-            transform.Translate(new Vector3(0.0f, distance / 30f, 0.0f), Space.Self);
+            transform.Translate(new Vector3(0.0f, distance / 10f, 0.0f), Space.Self);
         }
 
-        {
-            Debug.Log("Game Over");
-            gameManager.GameOver();
-        }
         trueDistance = playerController.transform.position.y - transform.position.y;
         if (trueDistance < -5)
             GameManager.instance.GameOver();

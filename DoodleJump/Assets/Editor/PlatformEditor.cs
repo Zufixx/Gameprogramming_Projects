@@ -10,9 +10,26 @@ public class PlatformEditor : Editor
     [SerializeField]
     public List<Type> Types;
 
+    // Variables for creating a new type
+    private int new_id;
+    private string new_typeName;
+    private float new_jumpHeight;
+    private Color new_color;
+    private float new_probability;
+    private Vector2 new_speed;
+    private float new_time;
+
     private void Awake()
     {
         Types = new List<Type>();
+
+        new_id = Types.Count + 1;
+        new_typeName = "Temp";
+        new_jumpHeight = 10f;
+        new_color = Color.white;
+        new_probability = 10f;
+        new_speed = Vector2.zero;
+        new_time = 0.5f;
 
         int i = 0;
 
@@ -69,23 +86,24 @@ public class PlatformEditor : Editor
         }
         EditorGUILayout.LabelField("");
         EditorGUILayout.LabelField("Add new type: ", EditorStyles.boldLabel);
-        EditorGUILayout.TextField("Type name:", "");
-        EditorGUILayout.ColorField("Color: ", Color.white);
-        EditorGUILayout.FloatField("Jump height: ", 10f);
-        EditorGUILayout.Slider("Probability (%):", 10f, 0f, 100f);
+        EditorGUILayout.LabelField("Type ID: " + new_id);
+        EditorGUILayout.TextField("Type name:", new_typeName);
+        EditorGUILayout.ColorField("Color: ", new_color);
+        EditorGUILayout.FloatField("Jump height: ", new_jumpHeight);
+        EditorGUILayout.Slider("Probability (%):", new_probability, 0f, 100f);
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Movement:");
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.Vector2Field("Speed: ", new Vector2());
+        EditorGUILayout.Vector2Field("Speed: ", new_speed);
         EditorGUILayout.EndHorizontal();
-        EditorGUILayout.FloatField("Time (s): ", 0.5f);
+        EditorGUILayout.FloatField("Time (s): ", new_time);
 
         EditorGUILayout.Space();
 
         if (GUILayout.Button("Create new type"))
         {
-            Debug.Log("Created a new type");
+            Debug.Log(new_typeName);
         }
 
         EditorGUILayout.Space();

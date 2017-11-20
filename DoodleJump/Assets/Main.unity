@@ -596,7 +596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformManager: {fileID: 364192528}
-  type: 1
   jumpHeight: 10
 --- !u!1 &912226546
 GameObject:

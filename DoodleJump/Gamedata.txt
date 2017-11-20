@@ -1,0 +1,29 @@
+// TypeName
+// JumpHeight
+// ColorR
+// ColorG
+// ColorB
+// Probability
+// MovementX
+// MovementY
+// Time;
+
+Standard,
+10.0,
+0.0,
+1.0,
+0.0,
+100,
+0,
+0,
+0.0;
+
+Fragile,
+0.0,
+1.0,
+1.0,
+0.0,
+10,
+0,
+0,
+0.0;

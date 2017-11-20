@@ -13,11 +13,10 @@ public class PlatformManager : MonoBehaviour {
     private float platformY;
     private int prevRng;
 
-
     private void Start()
     {
         platformY = 0.0f;
-        while(platformY < cameraObject.position.y + 6.0f)
+        while (platformY < cameraObject.position.y + 6.0f)
         {
             SpawnPlatform();
         }

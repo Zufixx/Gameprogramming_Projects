@@ -23,9 +23,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private GameObject bullet;
 
+    private enum types { };
+    private types type;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        //types = platformManager.types;
     }
 	
 	// Update is called once per frame
@@ -95,6 +99,7 @@ public class PlayerController : MonoBehaviour {
         {
             Platform platform = hit.transform.gameObject.GetComponent<Platform>();
 
+            /*
             if (platform.type == Platform.types.FRAGILE)
             {
                 Destroy(platform.gameObject);
@@ -102,10 +107,11 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
+            */
                 // Jump with the height set on the platform
                 jumpHeight = platform.GetJumpHeight();
                 rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            }
+            //}
 
 
             //Debug.Log("A hit!");

@@ -9,9 +9,6 @@ public class Platform : MonoBehaviour {
 
     private SpriteRenderer sr;
 
-    public enum types {STANDARD, GROUND, FRAGILE, MOVINGX, MOVINGY, HIGHJUMP}
-    public types type;
-
     public float jumpHeight;
 
     private float xSpeed;
@@ -32,29 +29,24 @@ public class Platform : MonoBehaviour {
         switch (rng)
         {
             case 0: case 1: case 2: case 3:
-                type = types.STANDARD;
                 jumpHeight = 10f;
                 sr.color = Color.green;
                 break;
             case 4:
-                type = types.FRAGILE;
                 jumpHeight = 0f;
                 sr.color = Color.yellow;
                 break;
             case 5:
-                type = types.MOVINGX;
                 jumpHeight = 10f;
                 sr.color = Color.blue;
                 xSpeed = 0.02f;
                 break;
             case 6:
-                type = types.MOVINGY;
                 jumpHeight = 10f;
                 sr.color = Color.cyan;
                 ySpeed = 0.02f;
                 break;
             case 7:
-                type = types.HIGHJUMP;
                 jumpHeight = 20f;
                 sr.color = Color.red;
                 break;
@@ -85,11 +77,13 @@ public class Platform : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        /*
         if (type != types.GROUND)
         {
            if (other.tag == "Boundary")
                 Destroy(gameObject);
         }
+        */
     }
 
     public float GetJumpHeight()

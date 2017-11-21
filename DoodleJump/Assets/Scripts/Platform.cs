@@ -9,6 +9,8 @@ public class Platform : MonoBehaviour {
 
     private SpriteRenderer sr;
 
+    public string typeName;
+    public bool fragile;
     public float jumpHeight;
 
     private float xSpeed;
@@ -16,48 +18,25 @@ public class Platform : MonoBehaviour {
     private Vector2 movement;
 
     private float moveInterval;
+    private float startInterval;
 
-    public void Initialize(int rng)
+    public void Initialize(PlatformType pf)
     {
         sr = GetComponent<SpriteRenderer>();
 
-        xSpeed = 0f;
-        ySpeed = 0f;
-
-        moveInterval = 0.5f;
-
-        switch (rng)
-        {
-            case 0: case 1: case 2: case 3:
-                jumpHeight = 10f;
-                sr.color = Color.green;
-                break;
-            case 4:
-                jumpHeight = 0f;
-                sr.color = Color.yellow;
-                break;
-            case 5:
-                jumpHeight = 10f;
-                sr.color = Color.blue;
-                xSpeed = 0.02f;
-                break;
-            case 6:
-                jumpHeight = 10f;
-                sr.color = Color.cyan;
-                ySpeed = 0.02f;
-                break;
-            case 7:
-                jumpHeight = 20f;
-                sr.color = Color.red;
-                break;
-        }
-
-        movement = new Vector2(xSpeed, ySpeed);
+        typeName = pf.typeName;
+        fragile = pf.fragile;
+        jumpHeight = pf.jumpHeight;
+        sr.color = pf.color;
+        movement = pf.speed * 0.02f;
+        moveInterval = pf.time;
+        startInterval = pf.time;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (xSpeed != 0f || ySpeed != 0f)
+        #region Platform Movement
+        if (movement.x != 0f || movement.y != 0f)
         {
             moveInterval -= Time.deltaTime;
 
@@ -67,23 +46,19 @@ public class Platform : MonoBehaviour {
             }
             else if (moveInterval <= 0)
             {
-                moveInterval = 1.0f;
+                moveInterval = startInterval * 2;
                 movement = -movement;
             }
 
             transform.Translate(movement, Space.Self);
         }
+        #endregion
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        /*
-        if (type != types.GROUND)
-        {
-           if (other.tag == "Boundary")
+        if (other.tag == "Boundary" && transform.tag != "Ground")
                 Destroy(gameObject);
-        }
-        */
     }
 
     public float GetJumpHeight()

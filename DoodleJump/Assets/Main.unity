@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 759490978}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -596,6 +596,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformManager: {fileID: 364192528}
+  typeName: 
+  fragile: 0
   jumpHeight: 10
 --- !u!1 &912226546
 GameObject:

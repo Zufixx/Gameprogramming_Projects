@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        #region Instancing
         if (instance == null)
         {
             instance = this;
@@ -26,14 +27,17 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        #endregion
     }
 
     // Update is called once per frame
     void Update ()
     {
+        #region Score
         score = playerController.GetMaxHeight();
         scoreText.text = "Score: " + Mathf.RoundToInt(score * 10);
-	}
+        #endregion
+    }
 
     public void GameOver()
     {

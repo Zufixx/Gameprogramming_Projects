@@ -9,9 +9,6 @@ public class PlatformEditor : Editor
 {
     private List<PlatformType> platformTypes = new List<PlatformType>();
 
-    private string filename = "Gamedata.txt";
-    private string standardTypes = "Standard,7,10,False,0,1,0,1,100,0,0,0,1;Fragile,7,0,True,1,1,0,1,10,0,0,0,0.5;High Jump,7,20, False,1,0,0,1,10,0,0,0,2;Move X,7,10, False,0.9448276,0,1,1,10,1,0,0.5,1;Move Y,7,10, False,0,0,1,1,10,0,1,0.5,1;";
-
     private string buttonLabel = "A refresh is needed to see the changes";
 
     // Variables for creating a new type
@@ -24,6 +21,12 @@ public class PlatformEditor : Editor
     private Vector2 new_speed;
     private float new_time;
     private float new_space;
+    //stuff
+
+    private bool initialCheck = true;
+
+    private string filename = "Gamedata.txt";
+    private string standardTypes = "Standard,7,10,False,0,1,0,1,100,0,0,0,1;Fragile,7,0,True,1,1,0,1,10,0,0,0,0.5;High Jump,7,20, False,1,0,0,1,10,0,0,0,2;Move X,7,10, False,0.9448276,0,1,1,10,1,0,0.5,1;Move Y,7,10, False,0,0,1,1,10,0,1,0.5,1;";
 
     private void Awake()
     {
@@ -38,8 +41,15 @@ public class PlatformEditor : Editor
         new_time = 0.5f;
         new_space = 1.0f;
 
-        CheckFileExists();
-        ReadFile();
+        initialCheck = true;
+        //CheckFileExists();
+        //ReadFile();
+        if (initialCheck)
+        {
+            CheckFileExists();
+            ReadFile();
+            initialCheck = false;
+        }
     }
 
     public override void OnInspectorGUI()
@@ -49,6 +59,7 @@ public class PlatformEditor : Editor
         base.OnInspectorGUI();
 
         filename = EditorGUILayout.TextField("Filename:", filename);
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         DrawNewType();
         DrawCurrentTypes();
@@ -64,15 +75,15 @@ public class PlatformEditor : Editor
     {
         if (!File.Exists(filename))
         {
-            //Debug.LogWarning("File did not exist. Created a new one.");
-            File.Create(filename);
-            File.WriteAllText(filename, standardTypes);
+            Debug.Log("Checking file from Editor");
+            File.AppendAllText(filename, standardTypes);
+            Debug.Log("Written to file");
         }
     }
 
     private void ReadFile()
     {
-        CheckFileExists();
+        Debug.Log("Reading file from Editor");
         string contents = string.Empty;
         using (FileStream fs = File.Open(filename, FileMode.Open))
         using (StreamReader reader = new StreamReader(fs))
@@ -109,11 +120,11 @@ public class PlatformEditor : Editor
                 }
             }
         }
+        Debug.Log("File read from Editor");
     }
 
     private void SaveAllToFile()
     {
-        CheckFileExists();
         string contents = string.Empty;
         foreach(PlatformType pf in platformTypes)
         {
@@ -140,7 +151,6 @@ public class PlatformEditor : Editor
 
     private void AddToFile(PlatformType pf)
     {
-        CheckFileExists();
         string contents = string.Empty;
         using (FileStream fs = File.Open(filename, FileMode.Open))
         using (StreamReader reader = new StreamReader(fs))

@@ -40,11 +40,17 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private float powerupOffset = 0.3f;
 
+    [Header("Game Data")]
+    [SerializeField]
+    private string filename = "Gamedata.txt";
+    [SerializeField]
+    private string standardTypes = "Standard,7,10,False,0,1,0,1,100,0,0,0,1;Fragile,7,0,True,1,1,0,1,10,0,0,0,0.5;High Jump,7,20, False,1,0,0,1,10,0,0,0,2;Move X,7,10, False,0.9448276,0,1,1,10,1,0,0.5,1;Move Y,7,10, False,0,0,1,1,10,0,1,0.5,1;";
+
     private void Start()
     {
+        CheckFileExists();
         ReadFile();
         SortTypes();
-
         platformY = 0.0f;
         while (platformY < cameraObject.position.y + 6.0f)
         {
@@ -56,6 +62,56 @@ public class Spawner : MonoBehaviour {
     {
         if (platformY < cameraObject.position.y + 6.0f)
             SpawnPlatform();
+    }
+
+    private void CheckFileExists()
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("Checking file from Spawner");
+            File.AppendAllText(filename, standardTypes);
+            Debug.Log("Written to file");
+        }
+    }
+
+    private void ReadFile()
+    {
+        string contents = string.Empty;
+        using (FileStream fs = File.Open(filename, FileMode.Open))
+        using (StreamReader reader = new StreamReader(fs))
+        {
+            contents = reader.ReadToEnd();
+            reader.Close();
+            fs.Close();
+        }
+        if (contents.Length > 0)
+        {
+            string[] lines = contents.Split(new char[] { ';' });
+            foreach (string line in lines)
+            {
+                if (!string.IsNullOrEmpty(line.Trim()) && !line.StartsWith("//"))
+                {
+                    string[] value = line.Split(new char[] { ',' });
+
+                    PlatformType platformType = new PlatformType(
+                        value[0].Trim(),                    // TypeName (string)
+                        float.Parse(value[1].TrimEnd()),    // JumpHeight
+                        float.Parse(value[2].TrimEnd()),    // Width
+                        bool.Parse(value[3].TrimEnd()),     // Fragile
+                        float.Parse(value[4].TrimEnd()),    // ColorR
+                        float.Parse(value[5].TrimEnd()),    // ColorG
+                        float.Parse(value[6].TrimEnd()),    // ColorB
+                        float.Parse(value[7].TrimEnd()),    // ColorA
+                        float.Parse(value[8].TrimEnd()),    // Probability
+                        float.Parse(value[9].TrimEnd()),    // MovementX
+                        float.Parse(value[10].TrimEnd()),   // MovementY
+                        float.Parse(value[11].TrimEnd()),   // Time
+                        float.Parse(value[12].TrimEnd())    // Space
+                        );
+                    platformTypes.Add(platformType);
+                }
+            }
+        }
     }
 
     public void SpawnPlatform()
@@ -97,46 +153,6 @@ public class Spawner : MonoBehaviour {
         if (rng < enemyProbability && !playerController.powerUp)
         {
             Instantiate(enemyPrefab, new Vector2(Random.Range(-1.8f, 1.8f), platformY + enemyOffset), Quaternion.identity);
-        }
-    }
-
-    private void ReadFile()
-    {
-        string contents = string.Empty;
-        using (FileStream fs = File.Open("Gamedata.txt", FileMode.Open))
-        using (StreamReader reader = new StreamReader(fs))
-        {
-            contents = reader.ReadToEnd();
-            reader.Close();
-            fs.Close();
-        }
-        if (contents.Length > 0)
-        {
-            string[] lines = contents.Split(new char[] { ';' });
-            foreach (string line in lines)
-            {
-                if (!string.IsNullOrEmpty(line.Trim()) && !line.StartsWith("//"))
-                {
-                    string[] value = line.Split(new char[] { ',' });
-
-                    PlatformType platformType = new PlatformType(
-                        value[0].Trim(),                    // TypeName (string)
-                        float.Parse(value[1].TrimEnd()),    // JumpHeight
-                        float.Parse(value[2].TrimEnd()),    // Width
-                        bool.Parse(value[3].TrimEnd()),     // Fragile
-                        float.Parse(value[4].TrimEnd()),    // ColorR
-                        float.Parse(value[5].TrimEnd()),    // ColorG
-                        float.Parse(value[6].TrimEnd()),    // ColorB
-                        float.Parse(value[7].TrimEnd()),    // ColorA
-                        float.Parse(value[8].TrimEnd()),    // Probability
-                        float.Parse(value[9].TrimEnd()),    // MovementX
-                        float.Parse(value[10].TrimEnd()),   // MovementY
-                        float.Parse(value[11].TrimEnd()),   // Time
-                        float.Parse(value[12].TrimEnd())    // Space
-                        );
-                    platformTypes.Add(platformType);
-                }
-            }
         }
     }
 

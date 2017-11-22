@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
 
             if (!File.Exists(path))
             {
-                WriteHighScore("0");
+                File.AppendAllText(path, "0");
                 highScore = 0;
             }
             else
@@ -108,14 +108,15 @@ public class GameManager : MonoBehaviour {
 
     private void WriteHighScore(string toWrite)
     {
-        File.WriteAllText(path, toWrite);
+        File.WriteAllText(path, "");
+        File.AppendAllText(path, toWrite);
     }
 
     private int ReadHighScore()
     {
         if (!File.Exists(path))
         {
-            WriteHighScore("0");
+            File.AppendAllText(path, "0");
             highScore = 0;
         }
 

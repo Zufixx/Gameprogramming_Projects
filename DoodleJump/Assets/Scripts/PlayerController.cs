@@ -72,6 +72,10 @@ public class PlayerController : MonoBehaviour {
                 Instantiate(bullet, transform.position, Quaternion.identity);
             }
         }
+        else
+        {
+            sr.enabled = false;
+        }
 
         if(powerUp && powerUpTimer >= 0f)
         {
@@ -141,7 +145,6 @@ public class PlayerController : MonoBehaviour {
         if (collision.transform.tag == "Enemy" && !powerUp)
         {
             GameManager.instance.GameOver();
-            sr.enabled = false;
         }
         else if (collision.transform.tag == "Powerup")
         {

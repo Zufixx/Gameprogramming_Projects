@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class PlatformManager : MonoBehaviour {
+public class Spawner : MonoBehaviour {
 
     private List<PlatformType> platformTypes = new List<PlatformType>();
 
@@ -13,9 +13,32 @@ public class PlatformManager : MonoBehaviour {
     [SerializeField]
     private GameObject platform;
 
+    [SerializeField]
+    private PlayerController playerController;
+
     private float rng;
     private float platformY;
     private PlatformType prevPlatform;
+
+    [Header("Enemy Spawning")]
+
+    [SerializeField]
+    private GameObject enemyPrefab;
+    [SerializeField]
+    [Range(0f, 100f)]
+    private float enemyProbability = 2f;
+    [SerializeField]
+    private float enemyOffset = 5f;
+
+    [Header("PowerUp Spawning")]
+
+    [SerializeField]
+    private GameObject powerupPrefab;
+    [SerializeField]
+    [Range(0f,100f)]
+    private float powerupProbability = 5f;
+    [SerializeField]
+    private float powerupOffset = 0.3f;
 
     private void Start()
     {
@@ -37,6 +60,7 @@ public class PlatformManager : MonoBehaviour {
 
     public void SpawnPlatform()
     {
+
         for (int i = 0; i < platformTypes.Count; i++)
         {
             rng = Random.Range(0f, 100f);
@@ -52,10 +76,27 @@ public class PlatformManager : MonoBehaviour {
                     Platform platformScript = currentPlatform.GetComponent<Platform>();
                     platformScript.Initialize(platformTypes[i]);
                     platformY += platformTypes[i].space;
+
+                    // If it is a standard platform
+                    if (platformTypes[i].probability == 100f)
+                    {
+                        //Debug.Log("Trying to spawn powerup");
+                        if (rng < powerupProbability)
+                        {
+                            //Debug.Log("Spawned powerup");
+                            Vector2 spawnPos = new Vector2(currentPlatform.transform.position.x, currentPlatform.transform.position.y + powerupOffset);
+                            Instantiate(powerupPrefab, spawnPos, Quaternion.identity);
+                        }
+                    }
                 }
                 else
                     continue;
             }
+        }
+        // Spawn Enemies
+        if (rng < enemyProbability && !playerController.powerUp)
+        {
+            Instantiate(enemyPrefab, new Vector2(Random.Range(-1.8f, 1.8f), platformY + enemyOffset), Quaternion.identity);
         }
     }
 
@@ -81,16 +122,17 @@ public class PlatformManager : MonoBehaviour {
                     PlatformType platformType = new PlatformType(
                         value[0].Trim(),                    // TypeName (string)
                         float.Parse(value[1].TrimEnd()),    // JumpHeight
-                        bool.Parse(value[2].TrimEnd()),     // Fragile
-                        float.Parse(value[3].TrimEnd()),    // ColorR
-                        float.Parse(value[4].TrimEnd()),    // ColorG
-                        float.Parse(value[5].TrimEnd()),    // ColorB
-                        float.Parse(value[6].TrimEnd()),    // ColorA
-                        float.Parse(value[7].TrimEnd()),    // Probability
-                        float.Parse(value[8].TrimEnd()),    // MovementX
-                        float.Parse(value[9].TrimEnd()),    // MovementY
-                        float.Parse(value[10].TrimEnd()),   // Time
-                        float.Parse(value[11].TrimEnd())    // Space
+                        float.Parse(value[2].TrimEnd()),    // Width
+                        bool.Parse(value[3].TrimEnd()),     // Fragile
+                        float.Parse(value[4].TrimEnd()),    // ColorR
+                        float.Parse(value[5].TrimEnd()),    // ColorG
+                        float.Parse(value[6].TrimEnd()),    // ColorB
+                        float.Parse(value[7].TrimEnd()),    // ColorA
+                        float.Parse(value[8].TrimEnd()),    // Probability
+                        float.Parse(value[9].TrimEnd()),    // MovementX
+                        float.Parse(value[10].TrimEnd()),   // MovementY
+                        float.Parse(value[11].TrimEnd()),   // Time
+                        float.Parse(value[12].TrimEnd())    // Space
                         );
                     platformTypes.Add(platformType);
                 }
@@ -115,7 +157,7 @@ public class PlatformManager : MonoBehaviour {
         }
         foreach(PlatformType pf in platformTypes)
         {
-            Debug.Log(pf.typeName + ", " + pf.probability);
+            //Debug.Log(pf.typeName + ", " + pf.probability);
         }
     }
 }

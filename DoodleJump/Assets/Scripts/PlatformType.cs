@@ -3,6 +3,7 @@
 public class PlatformType
 {
     public string typeName;
+    public float width;
     public float jumpHeight;
     public bool fragile;
     public Color color;
@@ -13,6 +14,7 @@ public class PlatformType
 
     public PlatformType(
         string typeName,
+        float width,
         float jumpHeight,
         bool fragile,
         float colorR,
@@ -26,6 +28,7 @@ public class PlatformType
         float space)
     {
         this.typeName = typeName;
+        this.width = width;
         this.jumpHeight = jumpHeight;
         this.fragile = fragile;
         this.probability = probability;

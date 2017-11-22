@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour {
 
-    [SerializeField]
-    private PlatformManager platformManager;
-
     private SpriteRenderer sr;
 
     public string typeName;
@@ -25,6 +22,7 @@ public class Platform : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
 
         typeName = pf.typeName;
+        transform.localScale = new Vector2(pf.width, transform.localScale.y);
         fragile = pf.fragile;
         jumpHeight = pf.jumpHeight;
         sr.color = pf.color;
@@ -35,7 +33,6 @@ public class Platform : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        #region Platform Movement
         if (movement.x != 0f || movement.y != 0f)
         {
             moveInterval -= Time.deltaTime;
@@ -52,7 +49,6 @@ public class Platform : MonoBehaviour {
 
             transform.Translate(movement, Space.Self);
         }
-        #endregion
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -61,8 +57,5 @@ public class Platform : MonoBehaviour {
                 Destroy(gameObject);
     }
 
-    public float GetJumpHeight()
-    {
-        return jumpHeight;
-    }
+    public float GetJumpHeight() { return jumpHeight; }
 }

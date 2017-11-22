@@ -9,13 +9,14 @@ public class PlatformEditor : Editor
 {
     private List<PlatformType> platformTypes = new List<PlatformType>();
 
-    public string filename = "Gamedata.txt";
-    private string standardTypes = "Standard,10,False,0,1,0,1,100,0,0,0,1;Fragile,0,True,1,1,0,1,10,0,0,0,0.5;High Jump,20, False,1,0,0,1,10,0,0,0,2;Move X,10, False,0.9448276,0,1,1,10,1,0,0.5,1;Move Y,10, False,0,0,1,1,10,0,1,0.5,1;";
+    private string filename = "Gamedata.txt";
+    private string standardTypes = "Standard,7,10,False,0,1,0,1,100,0,0,0,1;Fragile,7,0,True,1,1,0,1,10,0,0,0,0.5;High Jump,7,20, False,1,0,0,1,10,0,0,0,2;Move X,7,10, False,0.9448276,0,1,1,10,1,0,0.5,1;Move Y,7,10, False,0,0,1,1,10,0,1,0.5,1;";
 
     private string buttonLabel = "A refresh is needed to see the changes";
 
     // Variables for creating a new type
     private string new_typeName;
+    private float new_width;
     private float new_jumpHeight;
     private bool new_fragile;
     private Color new_color;
@@ -26,9 +27,9 @@ public class PlatformEditor : Editor
 
     private void Awake()
     {
-        #region Initial Values
         // Set all initial inspector values
         new_typeName = "";
+        new_width = 7f;
         new_jumpHeight = 10f;
         new_fragile = false;
         new_color = Color.white;
@@ -36,7 +37,6 @@ public class PlatformEditor : Editor
         new_speed = Vector2.zero;
         new_time = 0.5f;
         new_space = 1.0f;
-        #endregion
 
         CheckFileExists();
         ReadFile();
@@ -47,6 +47,8 @@ public class PlatformEditor : Editor
         PlatformCreator platformCreator = (PlatformCreator)target;
 
         base.OnInspectorGUI();
+
+        filename = EditorGUILayout.TextField("Filename:", filename);
 
         DrawNewType();
         DrawCurrentTypes();
@@ -62,7 +64,7 @@ public class PlatformEditor : Editor
     {
         if (!File.Exists(filename))
         {
-            Debug.LogWarning("File did not exist. Created a new one.");
+            //Debug.LogWarning("File did not exist. Created a new one.");
             File.Create(filename);
             File.WriteAllText(filename, standardTypes);
         }
@@ -90,17 +92,18 @@ public class PlatformEditor : Editor
 
                     PlatformType platformType = new PlatformType(
                         value[0].Trim(),                    // TypeName (string)
-                        float.Parse(value[1].TrimEnd()),    // JumpHeight
-                        bool.Parse(value[2].TrimEnd()),     // Bool
-                        float.Parse(value[3].TrimEnd()),    // ColorR
-                        float.Parse(value[4].TrimEnd()),    // ColorG
-                        float.Parse(value[5].TrimEnd()),    // ColorB
-                        float.Parse(value[6].TrimEnd()),    // ColorA
-                        float.Parse(value[7].TrimEnd()),    // Probability
-                        float.Parse(value[8].TrimEnd()),    // MovementX
-                        float.Parse(value[9].TrimEnd()),    // MovementY
-                        float.Parse(value[10].TrimEnd()) ,   // Time
-                        float.Parse(value[11].TrimEnd())    // Space
+                        float.Parse(value[1].TrimEnd()),    // Width    
+                        float.Parse(value[2].TrimEnd()),    // JumpHeight
+                        bool.Parse(value[3].TrimEnd()),     // Fragile
+                        float.Parse(value[4].TrimEnd()),    // ColorR
+                        float.Parse(value[5].TrimEnd()),    // ColorG
+                        float.Parse(value[6].TrimEnd()),    // ColorB
+                        float.Parse(value[7].TrimEnd()),    // ColorA
+                        float.Parse(value[8].TrimEnd()),    // Probability
+                        float.Parse(value[9].TrimEnd()),    // MovementX
+                        float.Parse(value[10].TrimEnd()),    // MovementY
+                        float.Parse(value[11].TrimEnd()) ,  // Time
+                        float.Parse(value[12].TrimEnd())    // Space
                         );
                     platformTypes.Add(platformType);
                 }
@@ -115,8 +118,9 @@ public class PlatformEditor : Editor
         foreach(PlatformType pf in platformTypes)
         {
             contents =
-                contents + "\n\n"
+                contents
                 + pf.typeName + ","
+                + pf.width + ","
                 + pf.jumpHeight + ","
                 + pf.fragile + ","
                 + pf.color.r + ","
@@ -146,8 +150,9 @@ public class PlatformEditor : Editor
             fs.Close();
         }
         contents = 
-            contents + "\n\n"
+            contents
             + pf.typeName + ","
+            + pf.width + ","
             + pf.jumpHeight + ","
             + pf.fragile + ","
             + pf.color.r + ","
@@ -168,12 +173,13 @@ public class PlatformEditor : Editor
     {
         EditorGUILayout.LabelField("Add new type: ", EditorStyles.boldLabel);
         new_typeName = EditorGUILayout.TextField(new GUIContent("Type name:", "Name used for debugging. No actual use in game."), new_typeName);
-        new_jumpHeight = EditorGUILayout.FloatField("Jump height: ", new_jumpHeight);
+        new_width = EditorGUILayout.FloatField("Width:", new_width);
+        new_jumpHeight = EditorGUILayout.FloatField("Jump height:", new_jumpHeight);
         new_fragile = EditorGUILayout.Toggle(new GUIContent("Fragile:", "Will break on impact with player if true"), new_fragile);
-        new_color = EditorGUILayout.ColorField("Color: ", new_color);
+        new_color = EditorGUILayout.ColorField("Color:", new_color);
         new_probability = EditorGUILayout.Slider(new GUIContent("Probability (%):", "This will be used to sort the list on runtime and sequentually test each probability of spawning. Smaller values will be tested first."), new_probability, 0f, 100f);
-        new_speed = EditorGUILayout.Vector2Field("Speed: ", new_speed);
-        new_time = EditorGUILayout.FloatField("Time (s): ", new_time);
+        new_speed = EditorGUILayout.Vector2Field("Speed:", new_speed);
+        new_time = EditorGUILayout.FloatField("Time (s):", new_time);
         new_space = EditorGUILayout.Slider(new GUIContent("Space:", "The amount of space between this and the next platform"), new_space, 0.1f, 30.0f);
 
         EditorGUILayout.Space();
@@ -184,6 +190,7 @@ public class PlatformEditor : Editor
             {
                 PlatformType newPlatform = new PlatformType(
                     new_typeName,
+                    new_width,
                     new_jumpHeight,
                     new_fragile,
                     new_color.r,
@@ -199,6 +206,7 @@ public class PlatformEditor : Editor
                 AddToFile(newPlatform);
                 buttonLabel = "New type \"" + new_typeName + "\" created. Refresh";
                 new_typeName = "";
+                new_width = 7f;
                 new_jumpHeight = 10f;
                 new_color = Color.white;
                 new_probability = 10f;
@@ -227,6 +235,7 @@ public class PlatformEditor : Editor
         {
             EditorGUILayout.LabelField("Type ID: " + i);
             platformTypes[i].typeName = EditorGUILayout.TextField("Type Name: ", platformTypes[i].typeName);
+            platformTypes[i].width = EditorGUILayout.FloatField("Width:", platformTypes[i].width);
             platformTypes[i].jumpHeight = EditorGUILayout.FloatField("Jump Height:", platformTypes[i].jumpHeight);
             platformTypes[i].fragile = EditorGUILayout.Toggle(new GUIContent("Fragile:", "Will break on impact with player if true"), platformTypes[i].fragile);
             platformTypes[i].color = EditorGUILayout.ColorField("Color: ", platformTypes[i].color);

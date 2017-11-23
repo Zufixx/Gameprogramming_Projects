@@ -7,6 +7,9 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private PlayerController playerController;
 
+    [SerializeField]
+    private float followingSpeed = 10f;
+
     private float distance;
     private float trueDistance;
 
@@ -16,7 +19,7 @@ public class CameraController : MonoBehaviour {
 
         if (distance > 0)
         {
-            transform.Translate(new Vector3(0.0f, distance / 10f, 0.0f), Space.Self);
+            transform.Translate(new Vector2(0.0f, distance / followingSpeed), Space.Self);
         }
 
         trueDistance = playerController.transform.position.y - transform.position.y;

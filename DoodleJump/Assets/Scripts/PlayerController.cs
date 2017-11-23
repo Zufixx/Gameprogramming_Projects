@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float powerUpTimer = 3f;
     private float powerUpTimerStart;
+    [SerializeField]
+    private float powerUpSpeed = 15;
 
 	// Use this for initialization
 	void Start () {
@@ -76,25 +78,25 @@ public class PlayerController : MonoBehaviour {
         {
             sr.enabled = false;
         }
-
-        if(powerUp && powerUpTimer >= 0f)
-        {
-            rb.AddForce(new Vector2(0f, 15f));
-            powerUpTimer -= Time.deltaTime;
-            sr.color = Color.red;
-        }
-        else if (powerUpTimer < 0f)
-        {
-            powerUp = false;
-            powerUpTimer = powerUpTimerStart;
-            sr.color = Color.white;
-        }
     }
 
     private void FixedUpdate()
     {
         if (!GameManager.instance.gameOver)
         {
+            if (powerUp && powerUpTimer >= 0f)
+            {
+                rb.AddForce(new Vector2(0f, powerUpSpeed));
+                powerUpTimer -= Time.deltaTime;
+                sr.color = Color.red;
+            }
+            else if (powerUpTimer < 0f)
+            {
+                powerUp = false;
+                powerUpTimer = powerUpTimerStart;
+                sr.color = Color.white;
+            }
+
             // Raycasting variables
             rayOrigin = transform.position;
             rayDirection = -Vector2.up;

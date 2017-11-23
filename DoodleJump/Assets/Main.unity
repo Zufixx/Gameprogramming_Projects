@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1518940675}
+  followingSpeed: 10
 --- !u!1 &208243997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1116,7 @@ MonoBehaviour:
   bullet: {fileID: 1068129548705796, guid: 8c8c978a0a050c94f925887057045d9a, type: 2}
   powerUp: 0
   powerUpTimer: 3
+  powerUpSpeed: 15
 --- !u!61 &1518940676
 BoxCollider2D:
   m_ObjectHideFlags: 0

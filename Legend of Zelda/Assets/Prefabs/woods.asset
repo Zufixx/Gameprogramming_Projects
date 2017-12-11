@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dbc59c9f094574f8f8ad5ba7255dad, type: 3}
+  m_Name: woods
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 4639619781278854, guid: 1c4617f087a634b40bd546738710e7e0, type: 2}
+  - {fileID: 4940749938596420, guid: 611863a43c939c24a91a698b88dd2c9d, type: 2}
+  - {fileID: 4951292713834712, guid: 3c63ad92e35f95c4480851dda2d9a27d, type: 2}
+  - {fileID: 4973109375746798, guid: f55eed9ab0faee743a937c9bcd5e177e, type: 2}
+  - {fileID: 4053905358340698, guid: 1fb25fdf65a9b484dacf2f2a1d0369ea, type: 2}
+  - {fileID: 4287719005664562, guid: 0604b52c8148f5f47a531b47cb2791c7, type: 2}

@@ -48,19 +48,18 @@ public class GridEditor : Editor {
     {
         //base.OnInspectorGUI();
 
-
+        EditorGUI.BeginChangeCheck();
         grid.spriteWidth = createSlider("Width:", grid.spriteWidth);
         grid.spriteHeight = createSlider("Height:", grid.spriteHeight);
-
-        if(GUILayout.Button("Open Grid Window"))
+        Color newColor = EditorGUILayout.ColorField("Color:", grid.color);
+        if(EditorGUI.EndChangeCheck())
         {
-            GridWindow window = (GridWindow)EditorWindow.GetWindow(typeof(GridWindow));
-            window.init();
+            grid.color = newColor;
         }
 
         // Tile Prefab
         EditorGUI.BeginChangeCheck();
-        var newTilePrefab = (Transform)EditorGUILayout.ObjectField("Tile Prefab", grid.tilePrefab, typeof(Transform), false);
+        Transform newTilePrefab = (Transform)EditorGUILayout.ObjectField("Tile Prefab", grid.tilePrefab, typeof(Transform), false);
         if(EditorGUI.EndChangeCheck())
         {
             grid.tilePrefab = newTilePrefab;
@@ -69,7 +68,7 @@ public class GridEditor : Editor {
 
         // Tile Map
         EditorGUI.BeginChangeCheck();
-        var newTileSet = (TileSet)EditorGUILayout.ObjectField("Tileset", grid.tileSet, typeof(TileSet), false);
+        TileSet newTileSet = (TileSet)EditorGUILayout.ObjectField("Tileset", grid.tileSet, typeof(TileSet), false);
         if(EditorGUI.EndChangeCheck())
         {
             grid.tileSet = newTileSet;
@@ -98,11 +97,11 @@ public class GridEditor : Editor {
                     oldIndex = index;
                     grid.tilePrefab = grid.tileSet.prefabs[index];
 
-                    float width = grid.tilePrefab.GetComponent<Renderer>().bounds.size.x;
-                    float height = grid.tilePrefab.GetComponent<Renderer>().bounds.size.y;
+                    //float width = grid.tilePrefab.GetComponent<Renderer>().bounds.size.x;
+                    //float height = grid.tilePrefab.GetComponent<Renderer>().bounds.size.y;
 
-                    grid.spriteWidth = width;
-                    grid.spriteHeight = height;
+                    //grid.spriteWidth = width;
+                    //grid.spriteHeight = height;
                 }
             }
         }

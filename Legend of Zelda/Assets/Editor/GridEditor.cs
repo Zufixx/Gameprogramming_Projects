@@ -112,7 +112,7 @@ public class GridEditor : Editor {
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label(labelName);
-        sliderPosition = EditorGUILayout.Slider(sliderPosition, 8f, 64f);
+        sliderPosition = EditorGUILayout.Slider(sliderPosition, 8f, 1024f);
         GUILayout.EndHorizontal();
 
         return sliderPosition;
@@ -125,7 +125,8 @@ public class GridEditor : Editor {
         Ray ray = Camera.current.ScreenPointToRay(new Vector3(e.mousePosition.x, -e.mousePosition.y + Camera.current.pixelHeight));
         Vector3 mousePos = ray.origin;
 
-        if (e.isMouse && e.type == EventType.MouseDown)
+        // Left click to place prefab
+        if (e.isMouse && e.type == EventType.MouseDown && e.button == 0)
         {
             GUIUtility.hotControl = controlID;
             e.Use();
@@ -136,20 +137,64 @@ public class GridEditor : Editor {
             if (prefab)
             {
                 Undo.IncrementCurrentGroup();
-                spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);
                 Vector3 aligned = new Vector3(
                     Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
                     Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
+
+                if (GetTransformFromPosition(aligned) != null)
+                    return;
+
+                spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);
                 spawnGO.transform.position = aligned;
                 spawnGO.transform.parent = grid.transform;
                 Undo.RegisterCreatedObjectUndo(spawnGO, "Create " + spawnGO.name);
             }
         }
 
+        // Right click to remove prefab
+        if(e.isMouse && e.type == EventType.MouseDown && e.button == 1)
+        {
+            GUIUtility.hotControl = controlID;
+            e.Use();
+
+            Vector3 aligned = new Vector3(
+                Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
+                Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
+
+            Transform tileTransform = GetTransformFromPosition(aligned);
+            if(tileTransform != null)
+            {
+                Undo.IncrementCurrentGroup();
+                Undo.DestroyObjectImmediate(tileTransform.gameObject);
+            }
+        }
+
+        /* If nothing is pressed, lose control (not used)
         if (e.isMouse && e.type == EventType.MouseUp)
         {
             GUIUtility.hotControl = 0;
         }
+        */
+    }
+
+    /// <summary>
+    /// Might need some optimising, currently checks ALL tiles
+    /// </summary>
+    private Transform GetTransformFromPosition(Vector3 aligned)
+    {
+        int i = 0;
+        while(i < grid.transform.childCount)
+        {
+            Transform tileTransform = grid.transform.GetChild(i);
+            if(tileTransform.position == aligned)
+            {
+                return tileTransform;
+            }
+
+            i++;
+        }
+
+        return null;
     }
 
 }

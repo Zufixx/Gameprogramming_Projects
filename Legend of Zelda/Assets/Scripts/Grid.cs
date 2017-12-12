@@ -38,5 +38,4 @@ public class Grid : MonoBehaviour
                             new Vector3(Mathf.Floor(x / width) * width, -1000000.0f));
         }
     }
-
 }

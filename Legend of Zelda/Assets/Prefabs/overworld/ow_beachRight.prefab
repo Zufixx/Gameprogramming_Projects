@@ -20,12 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4540715727676942}
   - component: {fileID: 212921403715105032}
+  - component: {fileID: 114960488659115714}
+  - component: {fileID: 114943071703782402}
   m_Layer: 0
   m_Name: ow_beachRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4540715727676942
 Transform:
@@ -33,13 +35,40 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1806220292984892}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: -15.55, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.701, y: -3.906, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114943071703782402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806220292984892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c85cf84f80d3c41b8f5bd7881beb3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  palettes:
+  - {fileID: 21300160, guid: 592dff0804aa327449f3e93000442b17, type: 3}
+  - {fileID: 21300064, guid: bbefe0542a54d3546bc2221fc124fd81, type: 3}
+--- !u!114 &114960488659115714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806220292984892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defd47dcc04563a4dacca787a86af8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_dynamic: 0
+  offset: 0
 --- !u!212 &212921403715105032
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -72,7 +101,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300064, guid: 592dff0804aa327449f3e93000442b17, type: 3}
+  m_Sprite: {fileID: 21300160, guid: 592dff0804aa327449f3e93000442b17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -11,6 +11,9 @@ public class GridEditor : Editor {
 
     private int oldIndex;
 
+    private enum palette { Brown, Green };
+    private palette tilePalette = palette.Brown;
+
     private void OnEnable()
     {
         oldIndex = 0;
@@ -65,6 +68,13 @@ public class GridEditor : Editor {
             grid.tilePrefab = newTilePrefab;
             Undo.RecordObject(target, "Grid Changed");
         }
+
+        // Tile Palette Index
+        //paletteIndex = EditorGUILayout.IntField("Palette Index", paletteIndex);
+        tilePalette = (palette)EditorGUILayout.EnumPopup("Palette:", tilePalette);
+
+
+
 
         // Tile Map
         EditorGUI.BeginChangeCheck();
@@ -127,45 +137,13 @@ public class GridEditor : Editor {
         // Left click to place prefab
         if (e.isMouse && e.type == EventType.MouseDown && e.button == 0)
         {
-            GUIUtility.hotControl = controlID;
-            e.Use();
-
-            GameObject spawnGO;
-            Transform prefab = grid.tilePrefab;
-
-            if (prefab)
-            {
-                Undo.IncrementCurrentGroup();
-                Vector3 aligned = new Vector3(
-                    Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
-                    Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
-
-                if (GetTransformFromPosition(aligned) != null)
-                    return;
-
-                spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);
-                spawnGO.transform.position = aligned;
-                spawnGO.transform.parent = grid.transform;
-                Undo.RegisterCreatedObjectUndo(spawnGO, "Create " + spawnGO.name);
-            }
+            PlaceTile(controlID, e, ray, mousePos);
         }
 
         // Right click to remove prefab
         if(e.isMouse && e.type == EventType.MouseDown && e.button == 1)
         {
-            GUIUtility.hotControl = controlID;
-            e.Use();
-
-            Vector3 aligned = new Vector3(
-                Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
-                Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
-
-            Transform tileTransform = GetTransformFromPosition(aligned);
-            if(tileTransform != null)
-            {
-                Undo.IncrementCurrentGroup();
-                Undo.DestroyObjectImmediate(tileTransform.gameObject);
-            }
+            RemoveTile(controlID, e, mousePos);
         }
 
         /* If nothing is pressed, lose control (not used)
@@ -174,6 +152,55 @@ public class GridEditor : Editor {
             GUIUtility.hotControl = 0;
         }
         */
+    }
+
+    private void PlaceTile(int controlID, Event e, Ray ray, Vector3 mousePos)
+    {
+        GUIUtility.hotControl = controlID;
+        e.Use();
+
+        GameObject spawnGO;
+        Transform prefab = grid.tilePrefab;
+
+        if (prefab)
+        {
+            Undo.IncrementCurrentGroup();
+            Vector3 aligned = new Vector3(
+                Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
+                Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
+
+            if (GetTransformFromPosition(aligned) != null)
+                return;
+
+            spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);
+            spawnGO.transform.position = aligned;
+            spawnGO.transform.parent = grid.transform;
+
+            if (spawnGO.GetComponent<Palette>() != null)
+            {
+                Palette palette = spawnGO.GetComponent<Palette>();
+                palette.Initialize((int)tilePalette);
+            }
+
+            Undo.RegisterCreatedObjectUndo(spawnGO, "Create " + spawnGO.name);
+        }
+    }
+
+    private void RemoveTile(int controlID, Event e, Vector3 mousePos)
+    {
+        GUIUtility.hotControl = controlID;
+        e.Use();
+
+        Vector3 aligned = new Vector3(
+            Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
+            Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
+
+        Transform tileTransform = GetTransformFromPosition(aligned);
+        if (tileTransform != null)
+        {
+            Undo.IncrementCurrentGroup();
+            Undo.DestroyObjectImmediate(tileTransform.gameObject);
+        }
     }
 
     /// <summary>

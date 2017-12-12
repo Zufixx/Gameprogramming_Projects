@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 592dff0804aa327449f3e93000442b17
-timeCreated: 1512142092
+timeCreated: 1513113099
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -52,6 +52,54 @@ TextureImporter:
     21300090: overworld bw_45
     21300092: overworld bw_46
     21300094: overworld bw_47
+    21300096: overworld_brown_0
+    21300098: overworld_brown_1
+    21300100: overworld_brown_2
+    21300102: overworld_brown_3
+    21300104: overworld_brown_4
+    21300106: overworld_brown_5
+    21300108: overworld_brown_6
+    21300110: overworld_brown_7
+    21300112: overworld_brown_8
+    21300114: overworld_brown_9
+    21300116: overworld_brown_10
+    21300118: overworld_brown_11
+    21300120: overworld_brown_12
+    21300122: overworld_brown_13
+    21300124: overworld_brown_14
+    21300126: overworld_brown_15
+    21300128: overworld_brown_16
+    21300130: overworld_brown_17
+    21300132: overworld_brown_18
+    21300134: overworld_brown_19
+    21300136: overworld_brown_20
+    21300138: overworld_brown_21
+    21300140: overworld_brown_22
+    21300142: overworld_brown_23
+    21300144: overworld_brown_24
+    21300146: overworld_brown_25
+    21300148: overworld_brown_26
+    21300150: overworld_brown_27
+    21300152: overworld_brown_28
+    21300154: overworld_brown_29
+    21300156: overworld_brown_30
+    21300158: overworld_brown_31
+    21300160: overworld_brown_32
+    21300162: overworld_brown_33
+    21300164: overworld_brown_34
+    21300166: overworld_brown_35
+    21300168: overworld_brown_36
+    21300170: overworld_brown_37
+    21300172: overworld_brown_38
+    21300174: overworld_brown_39
+    21300176: overworld_brown_40
+    21300178: overworld_brown_41
+    21300180: overworld_brown_42
+    21300182: overworld_brown_43
+    21300184: overworld_brown_44
+    21300186: overworld_brown_45
+    21300188: overworld_brown_46
+    21300190: overworld_brown_47
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -81,9 +129,9 @@ TextureImporter:
     filterMode: 0
     aniso: -1
     mipBias: -1
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -106,7 +154,7 @@ TextureImporter:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -114,7 +162,7 @@ TextureImporter:
   - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -122,7 +170,7 @@ TextureImporter:
   - buildTarget: WebGL
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -131,7 +179,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: overworld bw_0
+      name: overworld_brown_0
       rect:
         serializedVersion: 2
         x: 0
@@ -139,13 +187,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_1
+      name: overworld_brown_1
       rect:
         serializedVersion: 2
         x: 16
@@ -153,13 +201,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_2
+      name: overworld_brown_2
       rect:
         serializedVersion: 2
         x: 32
@@ -167,13 +215,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_3
+      name: overworld_brown_3
       rect:
         serializedVersion: 2
         x: 48
@@ -181,13 +229,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_4
+      name: overworld_brown_4
       rect:
         serializedVersion: 2
         x: 64
@@ -195,13 +243,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_5
+      name: overworld_brown_5
       rect:
         serializedVersion: 2
         x: 80
@@ -209,13 +257,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_6
+      name: overworld_brown_6
       rect:
         serializedVersion: 2
         x: 0
@@ -223,13 +271,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_7
+      name: overworld_brown_7
       rect:
         serializedVersion: 2
         x: 16
@@ -237,13 +285,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_8
+      name: overworld_brown_8
       rect:
         serializedVersion: 2
         x: 32
@@ -251,13 +299,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_9
+      name: overworld_brown_9
       rect:
         serializedVersion: 2
         x: 48
@@ -265,13 +313,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_10
+      name: overworld_brown_10
       rect:
         serializedVersion: 2
         x: 64
@@ -279,13 +327,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_11
+      name: overworld_brown_11
       rect:
         serializedVersion: 2
         x: 80
@@ -293,13 +341,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_12
+      name: overworld_brown_12
       rect:
         serializedVersion: 2
         x: 0
@@ -307,13 +355,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_13
+      name: overworld_brown_13
       rect:
         serializedVersion: 2
         x: 16
@@ -321,13 +369,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_14
+      name: overworld_brown_14
       rect:
         serializedVersion: 2
         x: 32
@@ -335,13 +383,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_15
+      name: overworld_brown_15
       rect:
         serializedVersion: 2
         x: 48
@@ -349,13 +397,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_16
+      name: overworld_brown_16
       rect:
         serializedVersion: 2
         x: 64
@@ -363,13 +411,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_17
+      name: overworld_brown_17
       rect:
         serializedVersion: 2
         x: 80
@@ -377,13 +425,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_18
+      name: overworld_brown_18
       rect:
         serializedVersion: 2
         x: 0
@@ -391,13 +439,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_19
+      name: overworld_brown_19
       rect:
         serializedVersion: 2
         x: 16
@@ -405,13 +453,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_20
+      name: overworld_brown_20
       rect:
         serializedVersion: 2
         x: 32
@@ -419,13 +467,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_21
+      name: overworld_brown_21
       rect:
         serializedVersion: 2
         x: 48
@@ -433,13 +481,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_22
+      name: overworld_brown_22
       rect:
         serializedVersion: 2
         x: 64
@@ -447,13 +495,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_23
+      name: overworld_brown_23
       rect:
         serializedVersion: 2
         x: 80
@@ -461,13 +509,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_24
+      name: overworld_brown_24
       rect:
         serializedVersion: 2
         x: 0
@@ -475,13 +523,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_25
+      name: overworld_brown_25
       rect:
         serializedVersion: 2
         x: 16
@@ -489,13 +537,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_26
+      name: overworld_brown_26
       rect:
         serializedVersion: 2
         x: 32
@@ -503,13 +551,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_27
+      name: overworld_brown_27
       rect:
         serializedVersion: 2
         x: 48
@@ -517,13 +565,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_28
+      name: overworld_brown_28
       rect:
         serializedVersion: 2
         x: 64
@@ -531,13 +579,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_29
+      name: overworld_brown_29
       rect:
         serializedVersion: 2
         x: 80
@@ -545,13 +593,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_30
+      name: overworld_brown_30
       rect:
         serializedVersion: 2
         x: 0
@@ -559,13 +607,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_31
+      name: overworld_brown_31
       rect:
         serializedVersion: 2
         x: 16
@@ -573,13 +621,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_32
+      name: overworld_brown_32
       rect:
         serializedVersion: 2
         x: 32
@@ -587,13 +635,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_33
+      name: overworld_brown_33
       rect:
         serializedVersion: 2
         x: 48
@@ -601,13 +649,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_34
+      name: overworld_brown_34
       rect:
         serializedVersion: 2
         x: 64
@@ -615,13 +663,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_35
+      name: overworld_brown_35
       rect:
         serializedVersion: 2
         x: 80
@@ -629,13 +677,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_36
+      name: overworld_brown_36
       rect:
         serializedVersion: 2
         x: 0
@@ -643,13 +691,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_37
+      name: overworld_brown_37
       rect:
         serializedVersion: 2
         x: 16
@@ -657,13 +705,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_38
+      name: overworld_brown_38
       rect:
         serializedVersion: 2
         x: 32
@@ -671,13 +719,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_39
+      name: overworld_brown_39
       rect:
         serializedVersion: 2
         x: 48
@@ -685,13 +733,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_40
+      name: overworld_brown_40
       rect:
         serializedVersion: 2
         x: 64
@@ -699,13 +747,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_41
+      name: overworld_brown_41
       rect:
         serializedVersion: 2
         x: 80
@@ -713,13 +761,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_42
+      name: overworld_brown_42
       rect:
         serializedVersion: 2
         x: 0
@@ -727,13 +775,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_43
+      name: overworld_brown_43
       rect:
         serializedVersion: 2
         x: 16
@@ -741,13 +789,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_44
+      name: overworld_brown_44
       rect:
         serializedVersion: 2
         x: 32
@@ -755,13 +803,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_45
+      name: overworld_brown_45
       rect:
         serializedVersion: 2
         x: 48
@@ -769,13 +817,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_46
+      name: overworld_brown_46
       rect:
         serializedVersion: 2
         x: 64
@@ -783,13 +831,13 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: overworld bw_47
+      name: overworld_brown_47
       rect:
         serializedVersion: 2
         x: 80
@@ -797,7 +845,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

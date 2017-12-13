@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour {
     private float speed = 0;
 
     // 0 = down, 1 = sides, 2 = up
-    private int direction = 0;
-    private bool walking = false;
+    // 0 = static, 1 = down, 2 = left, 3 = up, 4 = right
+    [SerializeField]
+    private int direction = 1;
+    // 0 = none, 1 = walking, 2 = attacking
+    [SerializeField]
+    private int state = 0;
 
     [SerializeField]
     private float upFlipTime;
@@ -23,11 +27,21 @@ public class PlayerController : MonoBehaviour {
     private Vector3 endPos;
 
     private bool startPosSet = false;
-    private bool transitioning = false;
+    private bool camTransitioning = false;
     bool right = false;
 
     [SerializeField]
-    private float transitionAmount;
+    [Range(0.1f,10f)]
+    private float camTransitionAmount;
+
+    private bool enterTransition = false;
+
+    private Transform mainCamera;
+
+    [SerializeField]
+    private bool swordGet = false;
+    [SerializeField]
+    private GameObject sword;
 
 	// Use this for initialization
 	void Start () {
@@ -35,73 +49,93 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
+        mainCamera = Camera.main.transform;
+
         startUpFlipTime = upFlipTime;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!transitioning)
+        if (!camTransitioning && !enterTransition)
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            if(state != 2)
+                Movement();
 
-            if (horizontal < -0.1f)
-            {
-                // Walk Left
-                direction = 1;
-                walking = true;
-                right = false;
-                rb.velocity = new Vector2(-speed, 0f);
+            if(swordGet)
+                Attacking();
+        }
+        if (enterTransition)
+        {
 
-            }
-            else if (horizontal > 0.1f)
-            {
-                // Walk Right
-                direction = 1;
-                walking = true;
-                right = true;
-                rb.velocity = new Vector2(speed, 0f);
-
-            }
-            else if (vertical < -0.1f)
-            {
-                // Walk Down
-                direction = 0;
-                walking = true;
-                rb.velocity = new Vector2(0f, -speed);
-
-            }
-            else if (vertical > 0.1f)
-            {
-                // Walk Up
-                direction = 2;
-                walking = true;
-                rb.velocity = new Vector2(0f, speed);
-            }
-            else
-            {
-                rb.velocity = Vector2.zero;
-                walking = false;
-            }
-
-            moveAnimation(direction, walking);
         }
     }
 
-    void moveAnimation(int direction, bool walking)
+    private void Movement()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        if(state == 2)
+        {
+            state = 0;
+            rb.velocity = new Vector2(0f, 0f);
+        }
+        else if (horizontal < -0.1f)
+        {
+            // Walk Left
+            direction = 2;
+            state = 1;
+            right = false;
+            rb.velocity = new Vector2(-speed, 0f);
+
+        }
+        else if (horizontal > 0.1f)
+        {
+            // Walk Right
+            direction = 4;
+            state = 1;
+            right = true;
+            rb.velocity = new Vector2(speed, 0f);
+
+        }
+        else if (vertical < -0.1f)
+        {
+            // Walk Down
+            direction = 1;
+            state = 1;
+            rb.velocity = new Vector2(0f, -speed);
+
+        }
+        else if (vertical > 0.1f)
+        {
+            // Walk Up
+            direction = 3;
+            state = 1;
+            rb.velocity = new Vector2(0f, speed);
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            state = 0;
+        }
+
+        MoveAnimation(direction, state);
+    }
+
+    void MoveAnimation(int direction, int state)
     {
         anim.SetInteger("direction", direction);
-        anim.SetBool("walk", walking);
+        anim.SetInteger("state", state);
 
-        if (direction == 2 && flipTimer() && walking)
+        if (direction == 3 && flipTimer() && state == 1)
         {
             sr.flipX = !sr.flipX;
         }
-        else if(direction == 1 && !right)
+        else if (direction == 2)
         {
             sr.flipX = true;
         }
-        else if (direction != 2)
+        else if (direction != 3)
         {
             sr.flipX = false;
         }
@@ -109,7 +143,7 @@ public class PlayerController : MonoBehaviour {
 
     bool flipTimer()
     {
-        if(upFlipTime > 0f)
+        if (upFlipTime > 0f)
         {
             upFlipTime -= Time.deltaTime;
             return false;
@@ -121,7 +155,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void TransitionPlayer(int getDirection, float timer, Vector3 diffPos)
+    public void CamTransitionPlayer(int getDirection, float timer, Vector3 diffPos)
     {
         if (!startPosSet)
         {
@@ -130,42 +164,103 @@ public class PlayerController : MonoBehaviour {
             GetComponent<CircleCollider2D>().enabled = false;
         }
 
-        TransitionAnim(getDirection);
-        transitioning = true;
+        CamTransitionAnim(getDirection);
+        camTransitioning = true;
 
-        endPos = startPos + diffPos / transitionAmount;
+        endPos = startPos + diffPos / camTransitionAmount;
         transform.position = Vector3.Lerp(startPos, endPos, timer);
     }
 
-    private void TransitionAnim(int getDirection)
+    private void CamTransitionAnim(int getDirection)
     {
-        walking = true;
+        state = 1;
 
-        switch(getDirection)
-        {
-            case 1:
-                direction = 0;
-                break;
-            case 2:
-                direction = 1;
-                break;
-            case 3:
-                direction = 2;
-                break;
-            case 4:
-                direction = 1;
-                break;
-        }
+        direction = getDirection;
 
-        moveAnimation(direction, true);
+        MoveAnimation(direction, 1);
     }
 
-    public void ResetTransition()
+    public void ResetCamTransition()
     {
         GetComponent<CircleCollider2D>().enabled = true;
         startPosSet = false;
         transform.position = endPos;
-        transitioning = false;
-        walking = false;
+        camTransitioning = false;
+        state = 0;
+    }
+
+    public void EnterTransition()
+    {
+
+    }
+
+    private void Attacking()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            if (!sword.activeSelf)
+            {
+                sword.SetActive(true);
+                state = 2;
+
+                Quaternion swordRot = new Quaternion();
+                float swordX = 0f;
+                float swordY = 0f;
+
+                switch (direction)
+                {
+                    case 1:
+                        // Down
+                        swordRot = Quaternion.Euler(0f, 0f, 270f);
+                        swordY = -0.7f;
+                        sr.flipX = false;
+                        break;
+                    case 2:
+                        // Left
+                        swordRot = Quaternion.Euler(0f, 0f, 180f);
+                        swordX = -0.7f;
+                        sr.flipX = true;
+                        break;
+                    case 3:
+                        // Up
+                        swordRot = Quaternion.Euler(0f, 0f, 90f);
+                        swordY = 0.7f;
+                        sr.flipX = false;
+                        break;
+                    case 4:
+                        // Right
+                        swordRot = swordRot = Quaternion.Euler(0f, 0f, 0f);
+                        swordX = 0.7f;
+                        sr.flipX = false;
+                        break;
+                }
+                sword.transform.rotation = swordRot;
+                sword.transform.position = transform.position + new Vector3(swordX, swordY);
+
+                StartCoroutine(swordTimer());
+            }
+        }
+        if(state == 2)
+        {
+            anim.SetInteger("direction", direction);
+            anim.SetInteger("state", state);
+        }
+    }
+
+    private IEnumerator swordTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        sword.SetActive(false);
+        state = 0;
+    }
+
+    public void Pickup(string pickup)
+    {
+        switch(pickup)
+        {
+            case "Sword":
+                swordGet = true;
+                break;
+        }
     }
 }

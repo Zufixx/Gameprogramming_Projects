@@ -25,16 +25,24 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float offsetY;
 
+    public bool isInCave = false;
+    [SerializeField]
+    private Transform caveCamPos;
+
 	// Use this for initialization
 	void Start () {
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if(direction != 0)
+        if(direction == 1 && isInCave)
+        {
+            return;
+        }
+        else if(direction != 0)
         {
             TransitionCamera();
-            playerController.TransitionPlayer(direction, timer, diffPos);
+            playerController.CamTransitionPlayer(direction, timer, diffPos);
             timer += Time.deltaTime / moveTime;
 
             if (timer >= 1f)
@@ -61,7 +69,7 @@ public class CameraController : MonoBehaviour {
         startPosSet = false;
         direction = 0;
         timer = 0f;
-        playerController.ResetTransition();
+        playerController.ResetCamTransition();
     }
 
     public void SetPos(int getDirection)

@@ -169,7 +169,10 @@ public class GridEditor : Editor {
                 Mathf.Floor(mousePos.x / grid.width) * grid.width + grid.width / 2.0f,
                 Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
 
-            if (GetTransformFromPosition(aligned) != null)
+            Transform tileOnPosition = GetTransformFromPosition(aligned);
+            if (tileOnPosition != null && !tileOnPosition.CompareTag("Ground"))
+                return;
+            else if (tileOnPosition != null && tileOnPosition.CompareTag("Ground") && prefab.CompareTag("Ground"))
                 return;
 
             spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);
@@ -208,8 +211,8 @@ public class GridEditor : Editor {
     /// </summary>
     private Transform GetTransformFromPosition(Vector3 aligned)
     {
-        int i = 0;
-        while(i < grid.transform.childCount)
+        int i = grid.transform.childCount - 1;
+        while(i > 0)
         {
             Transform tileTransform = grid.transform.GetChild(i);
             if(tileTransform.position == aligned)
@@ -217,7 +220,7 @@ public class GridEditor : Editor {
                 return tileTransform;
             }
 
-            i++;
+            i--;
         }
 
         return null;

@@ -20,11 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4540715727676942}
   - component: {fileID: 212921403715105032}
-  - component: {fileID: 114960488659115714}
   - component: {fileID: 114943071703782402}
   m_Layer: 0
   m_Name: ow_beachRight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -56,19 +55,6 @@ MonoBehaviour:
   palettes:
   - {fileID: 21300160, guid: 592dff0804aa327449f3e93000442b17, type: 3}
   - {fileID: 21300064, guid: bbefe0542a54d3546bc2221fc124fd81, type: 3}
---- !u!114 &114960488659115714
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1806220292984892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: defd47dcc04563a4dacca787a86af8be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_dynamic: 0
-  offset: 0
 --- !u!212 &212921403715105032
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -98,8 +84,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -87129347
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300160, guid: 592dff0804aa327449f3e93000442b17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

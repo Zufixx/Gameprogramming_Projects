@@ -17,11 +17,11 @@ public class FlipTimer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (flipTimer())
+        if (FlipTimerBool())
             sr.flipX = !sr.flipX;
     }
 
-    public bool flipTimer()
+    public bool FlipTimerBool()
     {
         if (flipTime > 0f)
         {

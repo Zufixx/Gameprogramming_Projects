@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Knockback))]
 public class PlayerController : MonoBehaviour {
 
     [SerializeField]
@@ -27,13 +31,13 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sr;
     private Animator anim;
     private Rigidbody2D rb;
+    private Knockback kb;
 
     private Vector3 startPos;
     private Vector3 endPos;
 
     private bool startPosSet = false;
     private bool camTransitioning = false;
-    bool right = false;
 
     [SerializeField]
     [Range(0.1f,10f)]
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        kb = GetComponent<Knockback>();
 
         mainCamera = Camera.main.transform;
 
@@ -77,7 +82,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!camTransitioning && !enterTransition && !exitTransition)
+        if (!camTransitioning && !enterTransition && !exitTransition && !kb.knockedBack)
         {
             Movement();
 
@@ -86,52 +91,8 @@ public class PlayerController : MonoBehaviour {
 
             MoveAnimation(direction, state);
         }
-        if (enterTransition)
-        {
-            sr.sortingLayerName = "Entering";
-            GetComponent<CircleCollider2D>().enabled = false;
-            MoveAnimation(3, 1);
-            transform.position = Vector3.Lerp(entrance.position, entrance.position - new Vector3(0f, 1.5f), entranceTimer);
 
-            if (entranceTimer < 1f)
-            {
-                entranceTimer += Time.deltaTime / 1.5f;
-                oldCam = mainCamera.transform.position;
-            }
-            else
-            {
-                mainCamera.transform.position = caveCam;
-                transform.position = caveCam + new Vector3(0f, -6.5f);
-                sr.sortingLayerName = "Foreground";
-                enterTransition = false;
-                GetComponent<CircleCollider2D>().enabled = true;
-                entranceTimer = 0f;
-                mainCamera.GetComponent<CameraController>().isInCave = true;
-            }
-        }
-        if(exitTransition)
-        {
-            sr.sortingLayerName = "Entering";
-            Debug.Log("Exiting cave");
-            GetComponent<CircleCollider2D>().enabled = false;
-            MoveAnimation(1, 1);
-            transform.position = Vector3.Lerp(entrance.position - new Vector3(0f, 1.5f), entrance.position - new Vector3(0f, 0.2f), exitTimer);
-            mainCamera.transform.position = oldCam;
-
-            if (exitTimer < 1f)
-            {
-                exitTimer += Time.deltaTime / 1.3f;
-            }
-            else
-            {
-                sr.sortingLayerName = "Foreground";
-                exitTransition = false;
-                GetComponent<CircleCollider2D>().enabled = true;
-                entrance.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                exitTimer = 0f;
-                mainCamera.GetComponent<CameraController>().isInCave = false;
-            }
-        }
+        CheckTransitions();
     }
 
     private void Movement()
@@ -139,7 +100,7 @@ public class PlayerController : MonoBehaviour {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        if(state == 2)
+        if (state == 2)
         {
             rb.velocity = new Vector2(0f, 0f);
         }
@@ -148,7 +109,6 @@ public class PlayerController : MonoBehaviour {
             // Walk Left
             direction = 2;
             state = 1;
-            right = false;
             rb.velocity = new Vector2(-speed, 0f);
 
         }
@@ -157,7 +117,6 @@ public class PlayerController : MonoBehaviour {
             // Walk Right
             direction = 4;
             state = 1;
-            right = true;
             rb.velocity = new Vector2(speed, 0f);
 
         }
@@ -183,12 +142,138 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    bool FlipTimer()
+    {
+        if (upFlipTime > 0f)
+        {
+            upFlipTime -= Time.deltaTime;
+            return false;
+        }
+        else
+        {
+            upFlipTime = startUpFlipTime;
+            return true;
+        }
+    }
+
+    private void Attacking()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (!sword.activeSelf)
+            {
+                sword.SetActive(true);
+                state = 2;
+
+                Quaternion swordRot = new Quaternion();
+                float swordX = 0f;
+                float swordY = 0f;
+
+                switch (direction)
+                {
+                    case 1:
+                        // Down
+                        swordRot = Quaternion.Euler(0f, 0f, 270f);
+                        swordY = -0.7f;
+                        sr.flipX = false;
+                        break;
+                    case 2:
+                        // Left
+                        swordRot = Quaternion.Euler(0f, 0f, 180f);
+                        swordX = -0.7f;
+                        sr.flipX = true;
+                        break;
+                    case 3:
+                        // Up
+                        swordRot = Quaternion.Euler(0f, 0f, 90f);
+                        swordY = 0.7f;
+                        sr.flipX = false;
+                        break;
+                    case 4:
+                        // Right
+                        swordRot = Quaternion.Euler(0f, 0f, 0f);
+                        swordX = 0.7f;
+                        sr.flipX = false;
+                        break;
+                }
+                sword.transform.rotation = swordRot;
+                sword.transform.position = transform.position + new Vector3(swordX, swordY);
+
+                StartCoroutine(SwordTimer());
+            }
+        }
+        if (state == 2)
+        {
+            anim.SetInteger("direction", direction);
+            anim.SetInteger("state", state);
+        }
+    }
+
+    private IEnumerator SwordTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        sword.SetActive(false);
+        state = 0;
+        anim.SetInteger("direction", direction);
+        anim.SetInteger("state", state);
+    }
+
+    private void CheckTransitions()
+    {
+        if (enterTransition)
+        {
+            sr.sortingLayerName = "Entering";
+            GetComponent<CircleCollider2D>().enabled = false;
+            MoveAnimation(3, 1);
+            transform.position = Vector3.Lerp(entrance.position, entrance.position - new Vector3(0f, 1.5f), entranceTimer);
+
+            if (entranceTimer < 1f)
+            {
+                entranceTimer += Time.deltaTime / 1.5f;
+                oldCam = mainCamera.transform.position;
+            }
+            else
+            {
+                mainCamera.transform.position = caveCam;
+                transform.position = caveCam + new Vector3(0f, -6.5f);
+                sr.sortingLayerName = "Foreground";
+                enterTransition = false;
+                GetComponent<CircleCollider2D>().enabled = true;
+                entranceTimer = 0f;
+                mainCamera.GetComponent<CameraController>().isInCave = true;
+            }
+        }
+        if (exitTransition)
+        {
+            sr.sortingLayerName = "Entering";
+            //Debug.Log("Exiting cave");
+            GetComponent<CircleCollider2D>().enabled = false;
+            MoveAnimation(1, 1);
+            transform.position = Vector3.Lerp(entrance.position - new Vector3(0f, 1.5f), entrance.position - new Vector3(0f, 0.2f), exitTimer);
+            mainCamera.transform.position = oldCam;
+
+            if (exitTimer < 1f)
+            {
+                exitTimer += Time.deltaTime / 1.3f;
+            }
+            else
+            {
+                sr.sortingLayerName = "Foreground";
+                exitTransition = false;
+                GetComponent<CircleCollider2D>().enabled = true;
+                entrance.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                exitTimer = 0f;
+                mainCamera.GetComponent<CameraController>().isInCave = false;
+            }
+        }
+    }
+
     void MoveAnimation(int direction, int state)
     {
         anim.SetInteger("direction", direction);
         anim.SetInteger("state", state);
 
-        if (direction == 3 && flipTimer() && state == 1)
+        if (direction == 3 && FlipTimer() && state == 1)
         {
             sr.flipX = !sr.flipX;
         }
@@ -202,18 +287,50 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    bool flipTimer()
+    public void Pickup(string pickup)
     {
-        if (upFlipTime > 0f)
+        switch(pickup)
         {
-            upFlipTime -= Time.deltaTime;
-            return false;
+            case "Sword":
+                swordGet = true;
+                swordText.text = "Sword: Yes";
+                break;
         }
-        else
+    }
+
+    public void LoseHealth(int damage)
+    {
+        if(health > 1 && !kb.knockedBack)
         {
-            upFlipTime = startUpFlipTime;
-            return true;
+            healthText.text = "Health: " + health.ToString();
+            health -= damage;
         }
+
+        else if (health <= 0)
+        {
+            GameManager.instance.GameOver();
+        }
+    }
+
+    public void LoseHealth(int damage, Transform other)
+    {
+        if (health >= 1 && !kb.knockedBack)
+        {
+            healthText.text = "Health: " + health.ToString();
+            kb.KnockbackFromTransform(other);
+            health -= damage;
+        }
+        if (health <= 0)
+        {
+            GameManager.instance.GameOver();
+        }
+    }
+
+    public void GetRupee()
+    {
+        if(rupees < 254)
+            rupees++;
+        rupeeText.text = "Rupees: " + rupees.ToString();
     }
 
     public void CamTransitionPlayer(int getDirection, float timer, Vector3 diffPos)
@@ -264,96 +381,5 @@ public class PlayerController : MonoBehaviour {
         transform.position = entrance.position - new Vector3(0f, 1.5f);
         exitTransition = true;
         mainCamera.transform.position = oldCam;
-    }
-
-    private void Attacking()
-    {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            if (!sword.activeSelf)
-            {
-                sword.SetActive(true);
-                state = 2;
-
-                Quaternion swordRot = new Quaternion();
-                float swordX = 0f;
-                float swordY = 0f;
-
-                switch (direction)
-                {
-                    case 1:
-                        // Down
-                        swordRot = Quaternion.Euler(0f, 0f, 270f);
-                        swordY = -0.7f;
-                        sr.flipX = false;
-                        break;
-                    case 2:
-                        // Left
-                        swordRot = Quaternion.Euler(0f, 0f, 180f);
-                        swordX = -0.7f;
-                        sr.flipX = true;
-                        break;
-                    case 3:
-                        // Up
-                        swordRot = Quaternion.Euler(0f, 0f, 90f);
-                        swordY = 0.7f;
-                        sr.flipX = false;
-                        break;
-                    case 4:
-                        // Right
-                        swordRot = swordRot = Quaternion.Euler(0f, 0f, 0f);
-                        swordX = 0.7f;
-                        sr.flipX = false;
-                        break;
-                }
-                sword.transform.rotation = swordRot;
-                sword.transform.position = transform.position + new Vector3(swordX, swordY);
-
-                StartCoroutine(swordTimer());
-            }
-        }
-        if(state == 2)
-        {
-            anim.SetInteger("direction", direction);
-            anim.SetInteger("state", state);
-        }
-    }
-
-    private IEnumerator swordTimer()
-    {
-        yield return new WaitForSeconds(0.2f);
-        sword.SetActive(false);
-        state = 0;
-        anim.SetInteger("direction", direction);
-        anim.SetInteger("state", state);
-    }
-
-    public void Pickup(string pickup)
-    {
-        switch(pickup)
-        {
-            case "Sword":
-                swordGet = true;
-                swordText.text = "Sword: Yes";
-                break;
-        }
-    }
-
-    public void LoseHealth(int damage)
-    {
-        if(health > 1)
-            health -= damage;
-        else if (health <= 0)
-        {
-            Debug.Log("Game Over");
-        }
-        healthText.text = "Health: " + health.ToString();
-    }
-
-    public void GetRupee()
-    {
-        if(rupees < 254)
-            rupees++;
-        rupeeText.text = "Rupees: " + rupees.ToString();
     }
 }

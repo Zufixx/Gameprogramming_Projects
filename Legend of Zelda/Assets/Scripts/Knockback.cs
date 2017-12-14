@@ -27,18 +27,21 @@ public class Knockback : MonoBehaviour {
 	
 	void Update () {
         if (knockedBack)
+            KnockbackTimer();
+    }
+
+    private void KnockbackTimer()
+    {
+        sr.color = knockbackColor;
+        if (knockedBackTimer <= 0f)
         {
-            sr.color = knockbackColor;
-            if (knockedBackTimer <= 0f)
-            {
-                knockedBack = false;
-                sr.color = new Color(1f, 1f, 1f);
-                knockedBackTimer = 0.5f;
-            }
-            else
-            {
-                knockedBackTimer -= Time.deltaTime;
-            }
+            knockedBack = false;
+            sr.color = new Color(1f, 1f, 1f);
+            knockedBackTimer = 0.5f;
+        }
+        else
+        {
+            knockedBackTimer -= Time.deltaTime;
         }
     }
 

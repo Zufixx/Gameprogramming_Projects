@@ -12,7 +12,11 @@ public class Pickup : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log(pickupName + " picked up.");
+            if(pickupName == "")
+            {
+                Debug.LogError("Pickup name not set!");
+                return;
+            }
             collision.GetComponent<PlayerController>().Pickup(pickupName);
             Destroy(gameObject);
         }

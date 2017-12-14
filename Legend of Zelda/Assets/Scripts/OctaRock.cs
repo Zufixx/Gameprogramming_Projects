@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Knockback))]
 public class OctaRock : MonoBehaviour {
 
     [SerializeField]
@@ -23,50 +23,30 @@ public class OctaRock : MonoBehaviour {
     private int direction;
     private Vector2 directionVector = Vector2.zero;
 
-    private Rigidbody2D m_rb;
-    private SpriteRenderer m_sr;
+    private Rigidbody2D rb;
+    private Knockback kb;
 
-    private bool knockedBack;
-    private float knockedBackTimer = 0.5f;
 
     private void Start()
     {
-        m_rb = GetComponent<Rigidbody2D>();
-        m_sr = GetComponent<SpriteRenderer>();
-        Randomize();
+        rb = GetComponent<Rigidbody2D>();
+        kb = GetComponent<Knockback>();
+
+        RandomizeDirection();
     }
 
     private void Update()
     {
-        if (duration >= 0 && !knockedBack)
+        if (duration >= 0 && !kb.knockedBack)
             duration -= Time.deltaTime;
-        else if(!knockedBack)
-            Randomize();
-
-        if(knockedBack)
-        {
-            if(knockedBackTimer <= 0f)
-            {
-                knockedBack = false;
-                m_sr.color = new Color(1f, 1f, 1f);
-                knockedBackTimer = 0.5f;
-            }
-            else
-            {
-                directionVector = Vector2.zero;
-                knockedBackTimer -= Time.deltaTime;
-                m_sr.color = new Color(0.5f, 0.5f, 0.5f);
-            }
-        }
+        else if(!kb.knockedBack)
+            RandomizeDirection();
     }
 
-    private void Randomize()
+    private void RandomizeDirection()
     {
-        duration = Random.Range(durationMin, durationMax);
-
-        direction = Random.Range(0, 5);
-
-        Debug.Log("Octarock direction: " + direction.ToString());
+        duration = Random.Range(durationMin, durationMax);  // Set a random duration to walk in set direction
+        direction = Random.Range(0, 5);                     // Get a random direction int
 
         switch (direction)
         {
@@ -94,45 +74,39 @@ public class OctaRock : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        m_rb.velocity = directionVector * speed;
+        if(!kb.knockedBack)
+            rb.velocity = directionVector * speed;
 
-        // Raycasting variables
+        RaycastForward();
+    }
+
+    private void RaycastForward()
+    {
+        // Raycasting forward
         Vector2 rayOrigin = transform.position;
         Vector2 rayDirection = directionVector;
         float rayDistance = 0.42f;
         LayerMask layer = 1 << 0;
 
-        // Shoot ray down from player
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, layer);
 
-        // Debug Drawing
-        Color color = hit ? Color.green : Color.red;
-        Debug.DrawRay(rayOrigin, rayDirection, color);
-
-        // If it hits a platform
         if (hit.collider != null)
         {
             if (!hit.transform.CompareTag("Player"))
             {
-                Debug.Log("Collided with wall");
+                // Flip direction
                 directionVector = -directionVector;
                 transform.Rotate(Vector3.up * 180f);
             }
         }
     }
 
-    private void Knockback()
-    {
-        knockedBack = true;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.transform.CompareTag("Player"))
-        {
-            collision.transform.gameObject.GetComponent<PlayerController>().LoseHealth(1);
-        }
-        if (collision.transform.CompareTag("Sword") && !knockedBack)
+            collision.transform.gameObject.GetComponent<PlayerController>().LoseHealth(1, transform);
+
+        if (collision.transform.CompareTag("Sword") && !kb.knockedBack)
         {
             health--;
             if (health <= 0)
@@ -143,7 +117,7 @@ public class OctaRock : MonoBehaviour {
                 Destroy(gameObject);
             }
             else
-                Knockback();
+                kb.KnockbackFromTransform(collision.transform.parent);
         }
     }
 }

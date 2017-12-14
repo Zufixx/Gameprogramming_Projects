@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sort : MonoBehaviour {
-	public bool m_dynamic = false;
+	public bool dynamic = false;
 
     [SerializeField]
     private float offset;
@@ -16,7 +16,7 @@ public class Sort : MonoBehaviour {
 	}
 
 	void Update () {
-		if(m_dynamic)
+		if(dynamic)
 		{
 			Vector3 position = transform.position;
 			position.z = position.y * 0.1f;

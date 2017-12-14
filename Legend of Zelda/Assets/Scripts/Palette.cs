@@ -11,7 +11,6 @@ public class Palette : MonoBehaviour {
 
     public void Initialize(int index)
     {
-        Debug.Log("Index:" + index.ToString());
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = palettes[index];
     }

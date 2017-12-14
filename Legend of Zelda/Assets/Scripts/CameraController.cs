@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
+public class CameraController : MonoBehaviour
+{
     // 0 = static, 1 = down, 2 = left, 3 = up, 4 = right
     public int direction;
 
@@ -31,33 +31,35 @@ public class CameraController : MonoBehaviour {
 
     private GameObject[] enemySpawners;
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         enemySpawners = GameObject.FindGameObjectsWithTag("EnemySpawner");
     }
 	
-	// Update is called once per frame
-	void Update () {
-        if(direction == 1 && isInCave)
+	void Update ()
+    {
+        if (direction == 1 && isInCave)
         {
             playerController.ExitTransition();
             direction = 0;
         }
-        else if(direction != 0 && !isInCave)
+        else if (direction != 0 && !isInCave)
         {
             TransitionCamera();
             playerController.CamTransitionPlayer(direction, timer, diffPos);
-            timer += Time.deltaTime / moveTime;
+            TransitionTimer();
+        }
+    }
 
-            if (timer >= 1f)
-            {
-                ResetTransition();
+    private void TransitionTimer()
+    {
+        timer += Time.deltaTime / moveTime;
 
-                foreach (GameObject spawner in enemySpawners)
-                {
-                    spawner.GetComponent<EnemySpawner>().CheckProximity();
-                }
-            }
+        if (timer >= 1f)
+        {
+            ResetTransition();
+            foreach (GameObject spawner in enemySpawners)
+                spawner.GetComponent<EnemySpawner>().CheckProximity();
         }
     }
 
@@ -79,7 +81,6 @@ public class CameraController : MonoBehaviour {
 
     private void ResetTransition()
     {
-        Debug.Log("Reset");
         transform.position = endPos;
         startPosSet = false;
         direction = 0;

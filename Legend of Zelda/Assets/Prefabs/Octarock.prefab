@@ -121,11 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b37dff098c8dc84bb8a8ea5abaf7ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationMin: 1
-  durationMax: 2
+  durationMin: 0.2
+  durationMax: 1
   speed: 1
   health: 3
   smokePrefab: {fileID: 1909571530763738, guid: b5ca86d59e91e064087f7579f7804f45,
+    type: 2}
+  rupeePrefab: {fileID: 1593147021159058, guid: fe522efc90f922341ad18386bf4f9803,
     type: 2}
 --- !u!212 &212489913695859054
 SpriteRenderer:
@@ -156,8 +158,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 456670953
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ba308062187626742ae3899b9ae38781, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

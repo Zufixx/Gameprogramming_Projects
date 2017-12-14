@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour {
 	void Start () {
         mainCamera = Camera.main.transform;
         CheckProximity();
+        GetComponent<SpriteRenderer>().enabled = false;
 	}
 	
 	// Update is called once per frame

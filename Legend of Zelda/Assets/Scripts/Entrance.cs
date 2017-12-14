@@ -14,7 +14,8 @@ public class Entrance : MonoBehaviour {
         {
             Debug.Log("Entered entrance");
             GameObject player = GameObject.Find("Link");
-            player.GetComponent<PlayerController>().EnterTransition();
+            player.GetComponent<PlayerController>().EnterTransition(transform, spawnPos.position);
+            GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

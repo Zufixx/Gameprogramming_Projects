@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private float speed = 0;
 
-    // 0 = down, 1 = sides, 2 = up
     // 0 = static, 1 = down, 2 = left, 3 = up, 4 = right
     [SerializeField]
     private int direction = 1;
@@ -39,17 +39,29 @@ public class PlayerController : MonoBehaviour {
     [Range(0.1f,10f)]
     private float camTransitionAmount;
 
-    private bool enterTransition = false;
-
     private Transform mainCamera;
 
-    [SerializeField]
     private bool swordGet = false;
     [SerializeField]
     private GameObject sword;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private Text swordText;
+    [SerializeField]
+    private Text healthText;
+    [SerializeField]
+    private Text rupeeText;
+
+    private float entranceTimer = 0f;
+    private float exitTimer = 0f;
+    private Transform entrance;
+    private Vector3 caveCam;
+    private Vector3 oldCam;
+    private bool enterTransition = false;
+    private bool exitTransition = false;
+
+    // Use this for initialization
+    void Start () {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -57,11 +69,15 @@ public class PlayerController : MonoBehaviour {
         mainCamera = Camera.main.transform;
 
         startUpFlipTime = upFlipTime;
-	}
+
+        healthText.text = "Health: " + health.ToString();
+        rupeeText.text = "Rupees: " + rupees.ToString();
+        swordText.text = "Sword: No";
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!camTransitioning && !enterTransition)
+        if (!camTransitioning && !enterTransition && !exitTransition)
         {
             Movement();
 
@@ -72,7 +88,49 @@ public class PlayerController : MonoBehaviour {
         }
         if (enterTransition)
         {
+            sr.sortingLayerName = "Entering";
+            GetComponent<CircleCollider2D>().enabled = false;
+            MoveAnimation(3, 1);
+            transform.position = Vector3.Lerp(entrance.position, entrance.position - new Vector3(0f, 1.5f), entranceTimer);
 
+            if (entranceTimer < 1f)
+            {
+                entranceTimer += Time.deltaTime / 1.5f;
+                oldCam = mainCamera.transform.position;
+            }
+            else
+            {
+                mainCamera.transform.position = caveCam;
+                transform.position = caveCam + new Vector3(0f, -6.5f);
+                sr.sortingLayerName = "Foreground";
+                enterTransition = false;
+                GetComponent<CircleCollider2D>().enabled = true;
+                entranceTimer = 0f;
+                mainCamera.GetComponent<CameraController>().isInCave = true;
+            }
+        }
+        if(exitTransition)
+        {
+            sr.sortingLayerName = "Entering";
+            Debug.Log("Exiting cave");
+            GetComponent<CircleCollider2D>().enabled = false;
+            MoveAnimation(1, 1);
+            transform.position = Vector3.Lerp(entrance.position - new Vector3(0f, 1.5f), entrance.position - new Vector3(0f, 0.2f), exitTimer);
+            mainCamera.transform.position = oldCam;
+
+            if (exitTimer < 1f)
+            {
+                exitTimer += Time.deltaTime / 1.3f;
+            }
+            else
+            {
+                sr.sortingLayerName = "Foreground";
+                exitTransition = false;
+                GetComponent<CircleCollider2D>().enabled = true;
+                entrance.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                exitTimer = 0f;
+                mainCamera.GetComponent<CameraController>().isInCave = false;
+            }
         }
     }
 
@@ -192,9 +250,20 @@ public class PlayerController : MonoBehaviour {
         state = 0;
     }
 
-    public void EnterTransition()
+    public void EnterTransition(Transform getEntrance, Vector3 spawnPos)
     {
+        entrance = getEntrance;
+        transform.position = entrance.position;
+        enterTransition = true;
+        caveCam = spawnPos;
+        oldCam = mainCamera.transform.position;
+    }
 
+    public void ExitTransition()
+    {
+        transform.position = entrance.position - new Vector3(0f, 1.5f);
+        exitTransition = true;
+        mainCamera.transform.position = oldCam;
     }
 
     private void Attacking()
@@ -265,6 +334,7 @@ public class PlayerController : MonoBehaviour {
         {
             case "Sword":
                 swordGet = true;
+                swordText.text = "Sword: Yes";
                 break;
         }
     }
@@ -277,11 +347,13 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Game Over");
         }
+        healthText.text = "Health: " + health.ToString();
     }
 
     public void GetRupee()
     {
         if(rupees < 254)
             rupees++;
+        rupeeText.text = "Rupees: " + rupees.ToString();
     }
 }

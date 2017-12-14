@@ -41,6 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Absolute Bot
+    uniqueID: 3300332875
+    locked: 0
+  - name: Entering
+    uniqueID: 2547240557
+    locked: 0
   - name: Background
     uniqueID: 4207837949
     locked: 0
@@ -49,4 +55,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 456670953
+    locked: 0
+  - name: Absolute Top
+    uniqueID: 3469311395
     locked: 0

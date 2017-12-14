@@ -16,6 +16,8 @@ public class OctaRock : MonoBehaviour {
     private int health = 3;
     [SerializeField]
     GameObject smokePrefab;
+    [SerializeField]
+    GameObject rupeePrefab;
 
     private float duration;
     private int direction;
@@ -136,6 +138,8 @@ public class OctaRock : MonoBehaviour {
             if (health <= 0)
             {
                 Instantiate(smokePrefab, transform.position, Quaternion.identity);
+                if (Random.value > 0.5f)
+                    Instantiate(rupeePrefab, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
             else

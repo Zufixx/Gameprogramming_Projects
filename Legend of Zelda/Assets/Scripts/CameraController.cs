@@ -40,9 +40,10 @@ public class CameraController : MonoBehaviour {
 	void Update () {
         if(direction == 1 && isInCave)
         {
-            return;
+            playerController.ExitTransition();
+            direction = 0;
         }
-        else if(direction != 0)
+        else if(direction != 0 && !isInCave)
         {
             TransitionCamera();
             playerController.CamTransitionPlayer(direction, timer, diffPos);

@@ -29,8 +29,11 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private Transform caveCamPos;
 
+    private GameObject[] enemySpawners;
+
 	// Use this for initialization
 	void Start () {
+        enemySpawners = GameObject.FindGameObjectsWithTag("EnemySpawner");
     }
 	
 	// Update is called once per frame
@@ -46,7 +49,14 @@ public class CameraController : MonoBehaviour {
             timer += Time.deltaTime / moveTime;
 
             if (timer >= 1f)
+            {
                 ResetTransition();
+
+                foreach (GameObject spawner in enemySpawners)
+                {
+                    spawner.GetComponent<EnemySpawner>().CheckProximity();
+                }
+            }
         }
     }
 
@@ -54,6 +64,10 @@ public class CameraController : MonoBehaviour {
     {
         if (!startPosSet)
         {
+            foreach (GameObject spawner in enemySpawners)
+            {
+                spawner.GetComponent<EnemySpawner>().DestroyEnemy();
+            }
             startPos = transform.position;
             startPosSet = true;
         }

@@ -15,6 +15,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private int state = 0;
 
+    public int health = 6;
+    public int maxHealth = 6;
+
+    public int rupees = 0;
+
     [SerializeField]
     private float upFlipTime;
     private float startUpFlipTime;
@@ -58,11 +63,12 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         if (!camTransitioning && !enterTransition)
         {
-            if(state != 2)
-                Movement();
+            Movement();
 
             if(swordGet)
                 Attacking();
+
+            MoveAnimation(direction, state);
         }
         if (enterTransition)
         {
@@ -77,7 +83,6 @@ public class PlayerController : MonoBehaviour {
 
         if(state == 2)
         {
-            state = 0;
             rb.velocity = new Vector2(0f, 0f);
         }
         else if (horizontal < -0.1f)
@@ -118,8 +123,6 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = Vector2.zero;
             state = 0;
         }
-
-        MoveAnimation(direction, state);
     }
 
     void MoveAnimation(int direction, int state)
@@ -252,6 +255,8 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         sword.SetActive(false);
         state = 0;
+        anim.SetInteger("direction", direction);
+        anim.SetInteger("state", state);
     }
 
     public void Pickup(string pickup)
@@ -262,5 +267,10 @@ public class PlayerController : MonoBehaviour {
                 swordGet = true;
                 break;
         }
+    }
+
+    public void LoseHealth(int damage)
+    {
+        health -= damage;
     }
 }

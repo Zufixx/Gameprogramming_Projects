@@ -9,44 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1031713474084808}
+  m_RootGameObject: {fileID: 1867282240175386}
   m_IsPrefabParent: 1
---- !u!1 &1031713474084808
+--- !u!1 &1867282240175386
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4467620597803006}
-  - component: {fileID: 212158423678219526}
-  - component: {fileID: 61368527775370148}
+  - component: {fileID: 4861118695145320}
+  - component: {fileID: 212174611586609464}
+  - component: {fileID: 58228137384164712}
+  - component: {fileID: 114799580482687236}
+  - component: {fileID: 114949352565492468}
   m_Layer: 0
-  m_Name: sword
-  m_TagString: Sword
+  m_Name: swordPickup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4467620597803006
+  m_IsActive: 1
+--- !u!4 &4861118695145320
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031713474084808}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_GameObject: {fileID: 1867282240175386}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 8, y: -38.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!61 &61368527775370148
-BoxCollider2D:
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!58 &58228137384164712
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031713474084808}
+  m_GameObject: {fileID: 1867282240175386}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -54,24 +56,39 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.4375}
-    newSize: {x: 1.0625, y: 0.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0625, y: 0.4375}
-  m_EdgeRadius: 0
---- !u!212 &212158423678219526
+  m_Radius: 0.5312501
+--- !u!114 &114799580482687236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867282240175386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defd47dcc04563a4dacca787a86af8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_dynamic: 0
+  offset: 0
+--- !u!114 &114949352565492468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867282240175386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3407cd2aa5eb5641be18454c9d2c972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupName: Sword
+--- !u!212 &212174611586609464
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031713474084808}
+  m_GameObject: {fileID: 1867282240175386}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -95,8 +112,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 456670953
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300020, guid: 2906fab2d366dcd459f78ac3636f2ddb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

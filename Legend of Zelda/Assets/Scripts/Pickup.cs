@@ -14,6 +14,7 @@ public class Pickup : MonoBehaviour
         {
             Debug.Log(pickupName + " picked up.");
             collision.GetComponent<PlayerController>().Pickup(pickupName);
+            Destroy(gameObject);
         }
     }
 }

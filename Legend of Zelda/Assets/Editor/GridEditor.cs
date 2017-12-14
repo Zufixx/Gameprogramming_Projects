@@ -11,8 +11,8 @@ public class GridEditor : Editor {
 
     private int oldIndex;
 
-    private enum palette { Brown, Green };
-    private palette tilePalette = palette.Brown;
+    private enum PaletteEnum { Brown, Green };
+    private PaletteEnum tilePalette = PaletteEnum.Brown;
 
     private void OnEnable()
     {
@@ -52,8 +52,8 @@ public class GridEditor : Editor {
         //base.OnInspectorGUI();
 
         EditorGUI.BeginChangeCheck();
-        grid.spriteWidth = createSlider("Width:", grid.spriteWidth);
-        grid.spriteHeight = createSlider("Height:", grid.spriteHeight);
+        grid.spriteWidth = CreateSlider("Width:", grid.spriteWidth);
+        grid.spriteHeight = CreateSlider("Height:", grid.spriteHeight);
         Color newColor = EditorGUILayout.ColorField("Color:", grid.color);
         if(EditorGUI.EndChangeCheck())
         {
@@ -71,7 +71,7 @@ public class GridEditor : Editor {
 
         // Tile Palette Index
         //paletteIndex = EditorGUILayout.IntField("Palette Index", paletteIndex);
-        tilePalette = (palette)EditorGUILayout.EnumPopup("Palette:", tilePalette);
+        tilePalette = (PaletteEnum)EditorGUILayout.EnumPopup("Palette:", tilePalette);
 
 
 
@@ -117,7 +117,7 @@ public class GridEditor : Editor {
         }
     }
 
-    private float createSlider(string labelName, float sliderPosition)
+    private float CreateSlider(string labelName, float sliderPosition)
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label(labelName);
@@ -135,13 +135,13 @@ public class GridEditor : Editor {
         Vector3 mousePos = ray.origin;
 
         // Left click to place prefab
-        if (e.isMouse && e.type == EventType.MouseDown && e.button == 0)
+        if (e.isMouse && e.type == EventType.MouseDown && e.button == 0 || e.isMouse && e.type == EventType.MouseDrag && e.button == 0)
         {
             PlaceTile(controlID, e, ray, mousePos);
         }
 
         // Right click to remove prefab
-        if(e.isMouse && e.type == EventType.MouseDown && e.button == 1)
+        if(e.isMouse && e.type == EventType.MouseDown && e.button == 1 || e.isMouse && e.type == EventType.MouseDrag && e.button == 1)
         {
             RemoveTile(controlID, e, mousePos);
         }

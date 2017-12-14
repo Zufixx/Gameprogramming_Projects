@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour {
             {
                 mainCamera.transform.position = caveCam;
                 transform.position = caveCam + new Vector3(0f, -6.5f);
-                sr.sortingLayerName = "Foreground";
+                sr.sortingLayerName = "Absolute Top";
                 enterTransition = false;
                 GetComponent<CircleCollider2D>().enabled = true;
                 entranceTimer = 0f;
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
-                sr.sortingLayerName = "Foreground";
+                sr.sortingLayerName = "Absolute Top";
                 exitTransition = false;
                 GetComponent<CircleCollider2D>().enabled = true;
                 entrance.gameObject.GetComponent<BoxCollider2D>().enabled = true;
@@ -302,10 +302,9 @@ public class PlayerController : MonoBehaviour {
     {
         if(health > 1 && !kb.knockedBack)
         {
-            healthText.text = "Health: " + health.ToString();
             health -= damage;
+            healthText.text = "Health: " + health.ToString();
         }
-
         else if (health <= 0)
         {
             GameManager.instance.GameOver();
@@ -316,9 +315,9 @@ public class PlayerController : MonoBehaviour {
     {
         if (health >= 1 && !kb.knockedBack)
         {
+            health -= damage;
             healthText.text = "Health: " + health.ToString();
             kb.KnockbackFromTransform(other);
-            health -= damage;
         }
         if (health <= 0)
         {

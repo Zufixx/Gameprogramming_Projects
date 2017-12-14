@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95156846369761566}
   - component: {fileID: 114847466624388814}
   - component: {fileID: 58666483433530486}
+  - component: {fileID: 114182757278184926}
   m_Layer: 0
   m_Name: Rupee
   m_TagString: Untagged
@@ -75,6 +76,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114182757278184926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593147021159058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defd47dcc04563a4dacca787a86af8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamic: 0
+  offset: 0
 --- !u!114 &114847466624388814
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -126,8 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockedBack: 0
+  constrainToGrid: 1
   knockedBackTimer: 0.2
   knockbackAmount: 2
+  knockbackColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &114460797426182878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defd47dcc04563a4dacca787a86af8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dynamic: 1
+  dynamic: 1
   offset: 0
 --- !u!114 &114805221758936172
 MonoBehaviour:

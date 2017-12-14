@@ -51,6 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a02cbfb66073746a0626409e4340dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
-  enemyPrefab: {fileID: 0}
-  smokePrefab: {fileID: 0}
+  active: 0
+  enemyPrefab: {fileID: 1963119373059744, guid: da943458f69df844e933e9e7db997142,
+    type: 2}
+  smokePrefab: {fileID: 1909571530763738, guid: b5ca86d59e91e064087f7579f7804f45,
+    type: 2}
+  spawnTime: 1

@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour {
         {
             foreach (GameObject spawner in enemySpawners)
             {
-                spawner.GetComponent<EnemySpawner>().DestroyEnemy();
+                spawner.GetComponent<EnemySpawner>().ResetEnemySpawner();
             }
             startPos = transform.position;
             startPosSet = true;

@@ -7,6 +7,85 @@ public class EnemySpawner : MonoBehaviour {
     private Transform mainCamera;
     [SerializeField]
     private bool active = false;
+    [SerializeField]
+    private GameObject enemyPrefab;
+    [SerializeField]
+    private GameObject smokePrefab;
+    private GameObject smoke;
+
+    private GameObject enemy;
+
+    [SerializeField]
+    [Range(0.1f, 10f)]
+    private float spawnTime;
+
+    private bool enemyIsAlive = false;
+
+	// Use this for initialization
+	void Start () {
+        mainCamera = Camera.main.transform;
+        CheckProximity();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+    }
+
+    public void CheckProximity()
+    {
+        float distance = Vector2.Distance(mainCamera.transform.position, transform.position);
+        if(distance <= 7.8)
+        {
+            Debug.Log("Enemy Spawner activated");
+            active = true;
+            SpawnEnemy();
+        }
+        else
+        {
+            Debug.Log("Enemy Spawner deactivated");
+            active = false;
+            ResetEnemySpawner();
+        }
+    }
+
+    public void ResetEnemySpawner()
+    {
+        active = false;
+        DestroyEnemy();
+    }
+
+    private void SpawnEnemy()
+    {
+        if (!enemyIsAlive)
+        {
+            enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            smoke = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+            enemyIsAlive = true;
+        }
+    }
+
+    public void DestroyEnemy()
+    {
+        if (enemy != null)
+        {
+            Instantiate(smokePrefab, enemy.transform.position, Quaternion.identity);
+            Destroy(enemy);
+            enemyIsAlive = false;
+        }
+    }
+}
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour {
+
+    private Transform mainCamera;
+    [SerializeField]
+    private bool active = false;
     private GameObject spawnedEnemy;
     [SerializeField]
     private GameObject enemyPrefab;
@@ -38,7 +117,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             spawnTime -= Time.deltaTime;
         }
-        else 
+        else if(!enemyIsAlive)
         {
             countdown = false;
             Destroy(smoke);
@@ -107,3 +186,4 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 }
+*/

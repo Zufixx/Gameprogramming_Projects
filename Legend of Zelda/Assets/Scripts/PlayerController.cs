@@ -271,6 +271,17 @@ public class PlayerController : MonoBehaviour {
 
     public void LoseHealth(int damage)
     {
-        health -= damage;
+        if(health > 1)
+            health -= damage;
+        else if (health <= 0)
+        {
+            Debug.Log("Game Over");
+        }
+    }
+
+    public void GetRupee()
+    {
+        if(rupees < 254)
+            rupees++;
     }
 }

@@ -12,10 +12,6 @@ public class EnemySpawner : MonoBehaviour {
 
     private GameObject enemy;
 
-    [SerializeField]
-    [Range(0.1f, 10f)]
-    private float spawnTime;
-
     private bool enemyIsAlive = false;
 
 	// Use this for initialization
@@ -24,16 +20,13 @@ public class EnemySpawner : MonoBehaviour {
         CheckProximity();
         GetComponent<SpriteRenderer>().enabled = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
 
     public void CheckProximity()
     {
-        float distance = Vector2.Distance(mainCamera.transform.position, transform.position);
-        if(distance <= 7.8)
+        float distanceX = Mathf.Abs(transform.position.x - mainCamera.transform.position.x);
+        float distanceY = Mathf.Abs(transform.position.y - (mainCamera.transform.position.y - 1.5f));
+
+        if (distanceX <= 8f && distanceY <= 5.5f)
         {
             SpawnEnemy();
         }

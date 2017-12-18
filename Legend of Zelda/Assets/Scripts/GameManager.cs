@@ -26,8 +26,19 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-	
-	void Update () {
+
+    private void Start()
+    {
+        GetComponent<OpeningScript>().Opening();
+        player.SetActive(false);
+    }
+
+    public void AfterOpening()
+    {
+        player.SetActive(true);
+    }
+
+    void Update () {
 		if(gameOver && Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730914724607392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.83, y: -18.63, z: 0}
+  m_LocalPosition: {x: 6.3748894, y: -18.260456, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a02cbfb66073746a0626409e4340dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
   enemyPrefab: {fileID: 1963119373059744, guid: da943458f69df844e933e9e7db997142,
     type: 2}
   smokePrefab: {fileID: 1909571530763738, guid: b5ca86d59e91e064087f7579f7804f45,

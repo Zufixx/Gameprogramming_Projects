@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
     private float offsetY;
 
     public bool isInCave = false;
-    [SerializeField]
     private Transform caveCamPos;
 
     private GameObject[] enemySpawners;

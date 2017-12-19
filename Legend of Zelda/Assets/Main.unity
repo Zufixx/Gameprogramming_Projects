@@ -25567,8 +25567,8 @@ MonoBehaviour:
   width: 1
   height: 1
   color: {r: 1, g: 1, b: 1, a: 1}
-  tilePrefab: {fileID: 4951292713834712, guid: 3c63ad92e35f95c4480851dda2d9a27d, type: 2}
-  tileSet: {fileID: 11400000, guid: 7e8d146909c084c479600cf51561c00a, type: 2}
+  tilePrefab: {fileID: 4646251565194468, guid: 4a467269b674b10408b545bd3037dfd5, type: 2}
+  tileSet: {fileID: 11400000, guid: 852b095babc35c74fbc25463e224c0ad, type: 2}
 --- !u!4 &630701890
 Transform:
   m_ObjectHideFlags: 0
@@ -36318,7 +36318,6 @@ MonoBehaviour:
   offsetX: 16
   offsetY: 11
   isInCave: 0
-  caveCamPos: {fileID: 1633089532}
 --- !u!1001 &843416554
 Prefab:
   m_ObjectHideFlags: 0

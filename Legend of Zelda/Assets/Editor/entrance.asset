@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dbc59c9f094574f8f8ad5ba7255dad, type: 3}
+  m_Name: entrance
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 4594751416027514, guid: e23da9ba3c6e3b2489b988f28df37aa6, type: 2}
+  - {fileID: 4247543603409112, guid: 590fabc610d04614784c01eafe3a3b80, type: 2}
+  - {fileID: 4903685022227724, guid: da526a1f88f2fae468dfca5db691d880, type: 2}
+  - {fileID: 4474632274205890, guid: 7fdd91a4d651a1140b7865ec2a52af2d, type: 2}
+  - {fileID: 4412269529260094, guid: 50b69c960168e4e4085334ee0f3e47a7, type: 2}
+  - {fileID: 4684725532626646, guid: 2e45cf4659a33f440a1207f749f74583, type: 2}

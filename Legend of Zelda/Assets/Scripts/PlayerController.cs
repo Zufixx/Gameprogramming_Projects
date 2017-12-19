@@ -64,12 +64,19 @@ public class PlayerController : MonoBehaviour {
     private bool enterTransition = false;
     private bool exitTransition = false;
 
+    private MusicManager musicManager;
+    [SerializeField]
+    private AudioClip themeMusic;
+    [SerializeField]
+    private AudioClip stairSound;
+
     // Use this for initialization
     void Start () {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         kb = GetComponent<Knockback>();
+        musicManager = GameManager.instance.musicManager;
 
         mainCamera = Camera.main.transform;
 
@@ -223,14 +230,16 @@ public class PlayerController : MonoBehaviour {
         if (enterTransition)
         {
             sr.sortingLayerName = "Entering";
+            if(musicManager.audioSource.clip != stairSound)
+                musicManager.PlayMusic(stairSound, false);
             GetComponent<CircleCollider2D>().enabled = false;
             MoveAnimation(3, 1);
             transform.position = Vector3.Lerp(entrance.position, entrance.position - new Vector3(0f, 1.5f), entranceTimer);
+            oldCam = mainCamera.transform.position;
 
             if (entranceTimer < 1f)
             {
                 entranceTimer += Time.deltaTime / 1.5f;
-                oldCam = mainCamera.transform.position;
             }
             else
             {
@@ -241,11 +250,14 @@ public class PlayerController : MonoBehaviour {
                 GetComponent<CircleCollider2D>().enabled = true;
                 entranceTimer = 0f;
                 mainCamera.GetComponent<CameraController>().isInCave = true;
+                musicManager.SetClip(null);
             }
         }
         if (exitTransition)
         {
             sr.sortingLayerName = "Entering";
+            if(musicManager.audioSource.clip != stairSound)
+                musicManager.PlayMusic(stairSound, false);
             //Debug.Log("Exiting cave");
             GetComponent<CircleCollider2D>().enabled = false;
             MoveAnimation(1, 1);
@@ -259,6 +271,7 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 sr.sortingLayerName = "Absolute Top";
+                musicManager.PlayMusic(themeMusic, true);
                 exitTransition = false;
                 GetComponent<CircleCollider2D>().enabled = true;
                 entrance.gameObject.GetComponent<BoxCollider2D>().enabled = true;

@@ -44,7 +44,6 @@ public class GridEditor : Editor {
         AssetDatabase.SaveAssets();
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = asset;
-        asset.hideFlags = HideFlags.DontSave;
     }
 
     public override void OnInspectorGUI()

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4486023323098474}
   - component: {fileID: 212667601857913154}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cloudMidTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

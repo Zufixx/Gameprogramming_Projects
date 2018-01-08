@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour {
 
         if (distance > 0)
         {
-            transform.Translate(new Vector2(0.0f, distance / followingSpeed), Space.Self);
+            transform.Translate(new Vector2(distance / followingSpeed, 0.0f), Space.Self);
         }
 
         trueDistance = playerController.transform.position.y - transform.position.y;

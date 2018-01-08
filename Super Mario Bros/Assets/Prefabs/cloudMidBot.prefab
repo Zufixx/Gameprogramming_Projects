@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4261220686758928}
   - component: {fileID: 212360430347340986}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cloudMidBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

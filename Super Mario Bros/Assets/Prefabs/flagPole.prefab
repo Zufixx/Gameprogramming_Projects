@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4325320389976268}
   - component: {fileID: 212547839850547676}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: flagPole
   m_TagString: Untagged
   m_Icon: {fileID: 0}

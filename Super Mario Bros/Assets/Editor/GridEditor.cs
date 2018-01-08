@@ -162,9 +162,7 @@ public class GridEditor : Editor {
                 Mathf.Floor(mousePos.y / grid.height) * grid.height + grid.height / 2.0f);
 
             Transform tileOnPosition = GetTransformFromPosition(aligned);
-            if (tileOnPosition != null && !tileOnPosition.CompareTag("Ground"))
-                return;
-            else if (tileOnPosition != null && tileOnPosition.CompareTag("Ground") && prefab.CompareTag("Ground"))
+            if (tileOnPosition != null)
                 return;
 
             spawnGO = (GameObject)PrefabUtility.InstantiatePrefab(prefab.gameObject);

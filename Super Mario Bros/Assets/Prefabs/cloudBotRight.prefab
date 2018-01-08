@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4206306635708250}
   - component: {fileID: 212803548513490048}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cloudBotRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

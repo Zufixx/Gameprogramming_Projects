@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4490487982066602}
   - component: {fileID: 212157419811687628}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: skyBlank
   m_TagString: Untagged
   m_Icon: {fileID: 0}

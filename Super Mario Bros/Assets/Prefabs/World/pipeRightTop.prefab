@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61780262436526658}
   m_Layer: 0
   m_Name: pipeRightTop
-  m_TagString: Ground
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

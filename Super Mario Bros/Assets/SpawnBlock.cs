@@ -7,10 +7,15 @@ public class SpawnBlock : MonoBehaviour {
     private SpriteRenderer sr;
     private SpriteSequence ss;
 
+    [Header("Fragile Block")]
+    [SerializeField]
+    private bool destroyOnHit = false;
+
+    [Header("Spawn Block")]
     [SerializeField]
     private Sprite usedSprite;
     [SerializeField]
-    private bool isUsed;
+    public bool isUsed;
     [SerializeField]
     private bool hidden;
 
@@ -22,7 +27,7 @@ public class SpawnBlock : MonoBehaviour {
     [SerializeField]
     private GameObject coinPrefab;
 
-    [Header("Spawn Block")]
+    [Header("Powerup Block")]
     [SerializeField]
     private GameObject spawnPrefab;
 
@@ -41,7 +46,11 @@ public class SpawnBlock : MonoBehaviour {
             if (hidden)
                 sr.enabled = true;
 
-            if (coinBlock)
+            if(destroyOnHit)
+            {
+                Destroy(gameObject);
+            }
+            else if (coinBlock)
             {
                 if (coinAmount >= 1)
                 {

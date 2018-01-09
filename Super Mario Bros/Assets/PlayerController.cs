@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     private float jumpHeight;
     [SerializeField]
     private float jumpFloat;
+    [SerializeField]
+    private float enemyBounce;
 
     [Header("Physics")]
     [SerializeField]
@@ -149,7 +151,7 @@ public class PlayerController : MonoBehaviour {
             if (goomba.isAlive)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0f);
-                rb.AddForce(new Vector2(0f, jumpHeight * 0.7f), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(0f, jumpHeight * enemyBounce), ForceMode2D.Impulse);
                 goomba.Die();
             }
         }
@@ -189,10 +191,17 @@ public class PlayerController : MonoBehaviour {
         {
             float distanceX = transform.position.x - collision.transform.position.x;
             float distanceY = transform.position.y - collision.transform.position.y;
-            if(distanceX < 0.75f && distanceY < -0.25f)
+            if(distanceX < 0.75f && distanceY < -0.5f)
             {
-                collision.gameObject.GetComponent<SpawnBlock>().HitFromBelow();
+                SpawnBlock spawnBlock = collision.gameObject.GetComponent<SpawnBlock>();
+                if (!spawnBlock.isUsed)
+                    spawnBlock.HitFromBelow();
             }
+        }
+        else if(collision.transform.tag == "Powerup")
+        {
+            Debug.Log(collision.transform.name);
+            Destroy(collision.gameObject);
         }
     }
 
@@ -215,6 +224,23 @@ public class PlayerController : MonoBehaviour {
             {
                 Debug.Log("Hit from below!");
             }
+        }
+    }
+
+    public void Hit()
+    {
+        Debug.Log("Hit!");
+    }
+
+    public void PowerUp(bool isOneUp)
+    {
+        if(isOneUp)
+        {
+            Debug.Log("1 up!");
+        }
+        else
+        {
+            Debug.Log("Big Mario!");
         }
     }
 }

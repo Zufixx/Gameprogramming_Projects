@@ -75,14 +75,24 @@ public class Goomba : MonoBehaviour {
 
             if(hit.collider != null)
             {
-                if(hit.collider.tag == "Player")
-                {
-                    Debug.Log("Bam!");
-                }
-                else
-                {
-                    goingLeft = !goingLeft;
-                }
+                goingLeft = !goingLeft;
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "Ground" || collision.transform.tag == "Obstacles")
+        {
+
+        }
+        else if (collision.transform.tag == "Player")
+        {
+            float distanceY = Mathf.Abs(transform.position.y - collision.transform.position.y);
+            Debug.Log("Y: " + distanceY);
+            if (distanceY < 0.5f)
+            {
+                collision.gameObject.GetComponent<PlayerController>().Hit();
             }
         }
     }

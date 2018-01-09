@@ -8,6 +8,7 @@ TagManager:
   - Obstacles
   - Goomba
   - HitFromBelow
+  - Powerup
   layers:
   - Default
   - TransparentFX

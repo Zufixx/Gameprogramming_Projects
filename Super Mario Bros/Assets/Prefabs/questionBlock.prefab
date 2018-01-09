@@ -95,14 +95,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c30a10e4a6fca04288d925971325c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnHit: 0
   usedSprite: {fileID: 21300006, guid: 026e45c659e4a834cac1b5abb2521b66, type: 3}
   isUsed: 0
   hidden: 0
-  coinBlock: 0
-  coinAmount: 0
-  coinPrefab: {fileID: 0}
-  spawnPrefab: {fileID: 1213468241751548, guid: 47d86182f1f728e4998aaf282a60d034,
-    type: 2}
+  coinBlock: 1
+  coinAmount: 1
+  coinPrefab: {fileID: 1315677591051018, guid: 815d4337bf9dad5429e18e6acbf7a25f, type: 2}
+  state: 0
+  spawnPrefabs:
+  - {fileID: 1878091181321322, guid: 5207a5eff6d265b4da59f5ac7a7d9d43, type: 2}
+  - {fileID: 1676030990773848, guid: 88f5457b766609549a423849cc04d199, type: 2}
+  - {fileID: 1757340467952320, guid: 424c4e984f120b245a9a6b964d5e95c6, type: 2}
 --- !u!212 &212402781667064658
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,8 +136,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1800032575
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 026e45c659e4a834cac1b5abb2521b66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

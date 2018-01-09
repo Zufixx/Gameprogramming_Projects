@@ -29,7 +29,9 @@ public class SpawnBlock : MonoBehaviour {
 
     [Header("Powerup Block")]
     [SerializeField]
-    private GameObject spawnPrefab;
+    private int powerState;
+    [SerializeField]
+    private GameObject[] spawnPrefabs;
 
     private void Start()
     {
@@ -40,17 +42,17 @@ public class SpawnBlock : MonoBehaviour {
             sr.enabled = false;
     }
 
-    public void HitFromBelow()
+    public void HitFromBelow(int playerState)
     {
         if (!isUsed) {
             if (hidden)
                 sr.enabled = true;
 
-            if(destroyOnHit)
+            if(destroyOnHit && playerState != 0)
             {
                 Destroy(gameObject);
             }
-            else if (coinBlock)
+            else if (coinBlock && !destroyOnHit)
             {
                 if (coinAmount >= 1)
                 {
@@ -60,9 +62,16 @@ public class SpawnBlock : MonoBehaviour {
                         Used();
                 }
             }
-            else
+            else if(!destroyOnHit)
             {
-                Instantiate(spawnPrefab, transform.position, Quaternion.identity);
+                if(powerState == 1 && playerState == 1 || powerState == 1 && playerState == 2)
+                {
+                    Instantiate(spawnPrefabs[2], transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(spawnPrefabs[powerState], transform.position, Quaternion.identity);
+                }
                 Used();
             }
         }

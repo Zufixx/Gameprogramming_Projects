@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: c5d5f3c13b059384496e90778dc34496
-timeCreated: 1515432674
+timeCreated: 1515516413
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: mario_0
+    21300002: mario_1
+    21300004: mario_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -83,6 +85,34 @@ TextureImporter:
         y: 637
         width: 16
         height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mario_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 654
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mario_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 526
+        width: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

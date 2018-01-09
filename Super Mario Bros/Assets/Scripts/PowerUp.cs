@@ -13,6 +13,8 @@ public class PowerUp : MonoBehaviour {
     private bool goingLeft = true;
     [SerializeField]
     private bool isOneUp = false;
+    [SerializeField]
+    private int state = 0;
 
     private float camDistance;
     private bool transitionDone = false;
@@ -60,7 +62,9 @@ public class PowerUp : MonoBehaviour {
         }
         else
         {
-            rb.constraints = RigidbodyConstraints2D.None;
+            if(state != 2)
+                rb.constraints = RigidbodyConstraints2D.None;
+
             transitionDone = true;
             col.enabled = true;
         }
@@ -68,7 +72,7 @@ public class PowerUp : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (transitionDone)
+        if (transitionDone && state != 2)
         {
             if (goingLeft)
                 rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
@@ -101,14 +105,15 @@ public class PowerUp : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.tag == "Ground" || collision.transform.tag == "Obstacles")
+        if (collision.transform.tag == "Player")
         {
-
-        }
-        else if(collision.transform.tag == "Player")
-        {
-            collision.gameObject.GetComponent<PlayerController>().PowerUp(isOneUp);
+            collision.gameObject.GetComponent<PlayerController>().PowerUp(state);
             Destroy(gameObject);
         }
+    }
+
+    public void SetState(int newState)
+    {
+        state = newState;
     }
 }

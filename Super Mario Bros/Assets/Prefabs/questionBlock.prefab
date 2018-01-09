@@ -102,7 +102,7 @@ MonoBehaviour:
   coinBlock: 1
   coinAmount: 1
   coinPrefab: {fileID: 1315677591051018, guid: 815d4337bf9dad5429e18e6acbf7a25f, type: 2}
-  state: 0
+  powerState: 0
   spawnPrefabs:
   - {fileID: 1878091181321322, guid: 5207a5eff6d265b4da59f5ac7a7d9d43, type: 2}
   - {fileID: 1676030990773848, guid: 88f5457b766609549a423849cc04d199, type: 2}

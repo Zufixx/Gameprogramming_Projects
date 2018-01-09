@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour {
+public class FlagPole : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

@@ -89,7 +89,6 @@ public class Goomba : MonoBehaviour {
         else if (collision.transform.tag == "Player")
         {
             float distanceY = Mathf.Abs(transform.position.y - collision.transform.position.y);
-            Debug.Log("Y: " + distanceY);
             if (distanceY < 0.5f)
             {
                 collision.gameObject.GetComponent<PlayerController>().Hit();

@@ -9,6 +9,7 @@ TagManager:
   - Goomba
   - HitFromBelow
   - Powerup
+  - FlagPole
   layers:
   - Default
   - TransparentFX
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 1800032575
+    locked: 0
+  - name: Entities
+    uniqueID: 2257439639
     locked: 0

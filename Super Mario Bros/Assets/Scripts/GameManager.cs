@@ -7,12 +7,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
-    public MusicManager musicManager;
-
-    public bool gameOver = false;
-
-    [SerializeField]
-    private GameObject player;
 
     void Awake()
     {
@@ -26,12 +20,10 @@ public class GameManager : MonoBehaviour {
         }
 
         Screen.SetResolution(1024, 896, true);
-
-        musicManager = GetComponent<MusicManager>();
     }
 
     void Update () {
-		if(gameOver && Input.GetKeyDown(KeyCode.R))
+		if(Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -43,7 +35,6 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        gameOver = true;
-        player.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

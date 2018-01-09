@@ -106,6 +106,7 @@ MonoBehaviour:
   goingLeft: 1
   isActivated: 0
   camDistance: 0
+  isAlive: 1
   deadSprite: {fileID: 21300004, guid: 263b3ea5c7b50cc4c80d52e30d02a175, type: 3}
 --- !u!212 &212547198998418994
 SpriteRenderer:
@@ -136,8 +137,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1800032575
-  m_SortingLayer: 1
+  m_SortingLayerID: -2037527657
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 263b3ea5c7b50cc4c80d52e30d02a175, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

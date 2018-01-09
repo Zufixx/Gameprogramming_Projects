@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private CapsuleCollider2D col;
+    private CapsuleCollider2D[] cols = new CapsuleCollider2D[2];
 
     [Header("Gameplay")]
     [SerializeField]
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
     void Start () {
 		rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        col = GetComponent<CapsuleCollider2D>();
+        cols = GetComponents<CapsuleCollider2D>();
 
         startGrounderTimer = groundedTimer;
         startCooldownTime = cooldownTime;
@@ -94,7 +94,10 @@ public class PlayerController : MonoBehaviour {
         if (!isAlive)
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            col.enabled = false;
+            foreach(CapsuleCollider2D col in cols)
+            {
+                col.enabled = false;
+            }
             sr.sprite = dyingSprite;
 
             if(dieTime != 2)
@@ -174,7 +177,8 @@ public class PlayerController : MonoBehaviour {
             rb.AddForce(new Vector2(0f, downForce), ForceMode2D.Force);
         }
 
-        GroundCheck();
+        if(isAlive)
+            GroundCheck();
     }
 
     private void Movement()
@@ -343,16 +347,22 @@ public class PlayerController : MonoBehaviour {
         {
             case 0:
                 transform.position = transform.position + new Vector3(0f, -0.5f);
-                col.size = new Vector2(0.6f, 1f);
+                foreach (CapsuleCollider2D col in cols)
+                {
+                    col.size = new Vector2(0.6f, 1f);
+                }
                 raycastOffsetY = 0f;
                 raycastOffsetX = 0.2f;
                 break;
             case 1:
             case 2:
-                if(col.size != new Vector2(1f, 2f))
+                if(cols[0].size != new Vector2(1f, 2f))
                     transform.position = transform.position + new Vector3(0f, 0.5f);
 
-                col.size = new Vector2(1f, 2f);
+                foreach (CapsuleCollider2D col in cols)
+                {
+                    col.size = new Vector2(1f, 2f);
+                }
                 raycastOffsetY = -0.5f;
                 raycastOffsetX = 0.4f;
                 break;

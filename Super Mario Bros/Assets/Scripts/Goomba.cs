@@ -75,7 +75,10 @@ public class Goomba : MonoBehaviour {
 
             if(hit.collider != null)
             {
-                goingLeft = !goingLeft;
+                if(hit.transform.tag == "Player")
+                    hit.transform.gameObject.GetComponent<PlayerController>().Hit();
+                else
+                    goingLeft = !goingLeft;
             }
         }
     }

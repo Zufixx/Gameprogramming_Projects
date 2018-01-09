@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour {
             else if (dieTime == 1)
             {
                 startPosition = endPosition;
-                endPosition = new Vector3(transform.position.x, -3f);
+                endPosition = new Vector3(transform.position.x, -5f);
                 floatUpTimer = 0f;
                 dieTime--;
             }
@@ -159,6 +159,11 @@ public class PlayerController : MonoBehaviour {
                     sr.enabled = true;
                 }
             }
+        }
+
+        if(isAlive && transform.position.y < -2f)
+        {
+            Die();
         }
     }
 
@@ -307,14 +312,12 @@ public class PlayerController : MonoBehaviour {
 
     public void Hit()
     {
-        Debug.Log("Hit!");
         if(state == 0 && !cooldown)
         {
             Die();
         }
         else if(!cooldown)
         {
-            Debug.Log("New state: " + (state - 1));
             ChangeState(state - 1);
             cooldown = true;
         }

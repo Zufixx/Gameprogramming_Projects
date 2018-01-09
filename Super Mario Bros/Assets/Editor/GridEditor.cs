@@ -11,9 +11,6 @@ public class GridEditor : Editor {
 
     private int oldIndex;
 
-    private enum PaletteEnum { Brown, Green };
-    private PaletteEnum tilePalette = PaletteEnum.Brown;
-
     private void OnEnable()
     {
         oldIndex = 0;

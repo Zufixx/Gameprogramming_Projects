@@ -12,8 +12,6 @@ public class PowerUp : MonoBehaviour {
     [SerializeField]
     private bool goingLeft = true;
     [SerializeField]
-    private bool isOneUp = false;
-    [SerializeField]
     private int state = 0;
 
     private float camDistance;

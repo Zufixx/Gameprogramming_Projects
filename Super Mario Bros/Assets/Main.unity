@@ -6018,6 +6018,7 @@ GameObject:
   - component: {fileID: 312887520}
   - component: {fileID: 312887519}
   - component: {fileID: 312887518}
+  - component: {fileID: 312887523}
   - component: {fileID: 312887516}
   - component: {fileID: 312887517}
   - component: {fileID: 312887521}
@@ -6081,8 +6082,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c5d5f3c13b059384496e90778dc34496, type: 3}
   - {fileID: 21300002, guid: c5d5f3c13b059384496e90778dc34496, type: 3}
   - {fileID: 21300004, guid: c5d5f3c13b059384496e90778dc34496, type: 3}
-  cooldownTime: 2
-  cooldown: 0
   isGrounded: 1
   groundedTimer: 0.3
   runSpeed: 0.5
@@ -6096,9 +6095,6 @@ MonoBehaviour:
   noFriction: {fileID: 6200000, guid: 79dc9800231944842882ee48181bb1c1, type: 2}
   highDrag: 4
   lowDrag: 0.5
-  floatUpDelay: 0.8
-  maxHeight: 3
-  dyingSprite: {fileID: 21300006, guid: c5d5f3c13b059384496e90778dc34496, type: 3}
 --- !u!212 &312887519
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6199,6 +6195,22 @@ PolygonCollider2D:
       - {x: 0.2, y: -0.5}
       - {x: 0.3, y: -0.45}
       - {x: -0, y: 0.5}
+--- !u!114 &312887523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312887515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed1058c97d1eb4992019b0f7769136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 2
+  cooldown: 0
+  floatUpDelay: 0.8
+  maxHeight: 3
+  dyingSprite: {fileID: 21300006, guid: c5d5f3c13b059384496e90778dc34496, type: 3}
 --- !u!1001 &316798411
 Prefab:
   m_ObjectHideFlags: 0

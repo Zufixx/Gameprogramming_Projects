@@ -35,10 +35,15 @@ public class SpawnBlock : MonoBehaviour {
 
     private void Start()
     {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         sr = GetComponent<SpriteRenderer>();
         ss = GetComponent<SpriteSequence>();
 
-        if(hidden)
+        if (hidden)
             sr.enabled = false;
     }
 
@@ -49,9 +54,7 @@ public class SpawnBlock : MonoBehaviour {
                 sr.enabled = true;
 
             if(destroyOnHit && playerState != 0)
-            {
                 Destroy(gameObject);
-            }
             else if (coinBlock && !destroyOnHit)
             {
                 if (coinAmount >= 1)
@@ -65,13 +68,10 @@ public class SpawnBlock : MonoBehaviour {
             else if(!destroyOnHit)
             {
                 if(powerState == 1 && playerState == 1 || powerState == 1 && playerState == 2)
-                {
                     Instantiate(spawnPrefabs[2], transform.position, Quaternion.identity);
-                }
                 else
-                {
                     Instantiate(spawnPrefabs[powerState], transform.position, Quaternion.identity);
-                }
+
                 Used();
             }
         }

@@ -108,11 +108,10 @@ public class Goomba : MonoBehaviour {
             float distanceY =  collision.transform.position.y - transform.position.y;
             GameObject player = collision.gameObject;
             int state = player.GetComponent<PlayerController>().state;
-            Debug.Log("Distance Y: " + distanceY);
             if (state == 0 && distanceY < 0.5f)
-                collision.gameObject.GetComponent<PlayerController>().Hit();
+                collision.gameObject.GetComponent<PlayerHit>().Hit();
             else if(state != 0 && distanceY < 1f)
-                collision.gameObject.GetComponent<PlayerController>().Hit();
+                collision.gameObject.GetComponent<PlayerHit>().Hit();
         }
     }
 

@@ -15,15 +15,20 @@ public class CoinScript : MonoBehaviour {
     private Vector3 startPosition;
     private Vector3 endPosition;
 
-    private void Start ()
+    private void Start()
+    {
+        Initialize();
+    }
+	
+	private void Update()
+    {
+        BounceLerp();
+    }
+
+    private void Initialize()
     {
         startPosition = transform.position;
         endPosition = startPosition + new Vector3(0f, maxHeight);
-    }
-	
-	private void Update ()
-    {
-        BounceLerp();
     }
 
     private void BounceLerp()

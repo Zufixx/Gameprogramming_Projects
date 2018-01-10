@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float followSpeed = 30f;
     [SerializeField]
-    private float offset = 3f;
+    private float offset;
 
     private void FixedUpdate()
     {

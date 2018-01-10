@@ -18,7 +18,7 @@ public class SpriteSequence : MonoBehaviour {
         Initialize();
     }
 
-    private void Update ()
+    private void Update()
     {
         SpriteTimer();
 	}

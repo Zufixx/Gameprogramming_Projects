@@ -13,8 +13,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Gameplay")]
     [SerializeField]
     private bool isAlive = true;
-    [SerializeField]
-    private int state = 0;
+    public int state = 0;
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
@@ -79,81 +78,25 @@ public class PlayerController : MonoBehaviour {
     private Sprite dyingSprite;
     private int dieTime = 2;
 
-    // Use this for initialization
-    void Start () {
-		rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        cols = GetComponents<CapsuleCollider2D>();
-
-        startGrounderTimer = groundedTimer;
-        startCooldownTime = cooldownTime;
+    private void Start ()
+    {
+        Initialize();
     }
 	
-	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         if (!isAlive)
-        {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            foreach(CapsuleCollider2D col in cols)
-            {
-                col.enabled = false;
-            }
-            sr.sprite = dyingSprite;
-
-            if(dieTime != 2)
-                transform.position = Vector3.Lerp(startPosition, endPosition, floatUpTimer);
-
-            if (floatUpTimer < 1f)
-            {
-                floatUpTimer += Time.deltaTime / floatUpDelay;
-            }
-            else if (dieTime == 2)
-            {
-                floatUpTimer = 0f;
-                dieTime--;
-            }
-            else if (dieTime == 1)
-            {
-                startPosition = endPosition;
-                endPosition = new Vector3(transform.position.x, -5f);
-                floatUpTimer = 0f;
-                dieTime--;
-            }
-            else 
-            {
-                GameManager.instance.GameOver();
-            }
-        }
+            DeathAnimation();
         else
         {
             Movement();
             GroundedTimer();
-
-            if (!isGrounded)
-            {
-                rb.sharedMaterial = noFriction;
-                rb.drag = lowDrag;
-                if (rb.velocity.y < 0f)
-                    groundedTimer = 0f;
-            }
-            else
-            {
-                rb.sharedMaterial = friction;
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                Jump();
-            }
-            else
-            {
-                groundedTimer = 0f;
-            }
+            SetFriction();
+            Jumping();
 
             if (cooldown)
             {
                 cooldownTime -= Time.deltaTime;
-                sr.enabled = !sr.enabled;
 
                 if (cooldownTime <= 0)
                 {
@@ -172,6 +115,10 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if(cooldown)
+        {
+            sr.enabled = !sr.enabled;
+        }
         if(rb.velocity.y < 0f)
         {
             rb.AddForce(new Vector2(0f, downForce), ForceMode2D.Force);
@@ -179,6 +126,16 @@ public class PlayerController : MonoBehaviour {
 
         if(isAlive)
             GroundCheck();
+    }
+
+    private void Initialize()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        cols = GetComponents<CapsuleCollider2D>();
+
+        startGrounderTimer = groundedTimer;
+        startCooldownTime = cooldownTime;
     }
 
     private void Movement()
@@ -249,12 +206,31 @@ public class PlayerController : MonoBehaviour {
             isGrounded = false;
     }
 
+    private void SetFriction()
+    {
+        if (!isGrounded)
+        {
+            rb.sharedMaterial = noFriction;
+            rb.drag = lowDrag;
+            if (rb.velocity.y < 0f)
+                groundedTimer = 0f;
+        }
+        else
+            rb.sharedMaterial = friction;
+    }
+
+    private void Jumping()
+    {
+        if (Input.GetKey(KeyCode.Space))
+            Jump();
+        else
+            groundedTimer = 0f;
+    }
+
     private void HitGround(RaycastHit2D hit)
     {
         if (hit.transform.tag == "Ground" || hit.transform.tag == "Obstacles" || hit.transform.tag == "HitFromBelow")
-        {
             isGrounded = true;
-        }
         else if (hit.transform.tag == "Goomba")
         {
             Goomba goomba = hit.transform.GetComponent<Goomba>();
@@ -272,9 +248,7 @@ public class PlayerController : MonoBehaviour {
     private void GroundedTimer()
     {
         if(!isGrounded && groundedTimer > 0f)
-        {
             groundedTimer -= Time.deltaTime;
-        }
         else if (isGrounded)
         {
             groundedTimer = startGrounderTimer;
@@ -290,14 +264,12 @@ public class PlayerController : MonoBehaviour {
             hasJumped = true;
         }
         else if (groundedTimer > 0f)
-        {
             rb.AddForce(new Vector2(0f, jumpFloat * Time.deltaTime * 30f), ForceMode2D.Impulse);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.transform.tag == "HitFromBelow")
+        if(collision.transform.tag == "HitFromBelow" && rb.velocity.y > -0.2f)
         {
             float distanceY = transform.position.y - collision.transform.position.y;
             if(distanceY < -0.9f)
@@ -317,12 +289,10 @@ public class PlayerController : MonoBehaviour {
     public void Hit()
     {
         if(state == 0 && !cooldown)
-        {
             Die();
-        }
         else if(!cooldown)
         {
-            ChangeState(state - 1);
+            ChangeState(0);
             cooldown = true;
         }
     }
@@ -330,9 +300,7 @@ public class PlayerController : MonoBehaviour {
     public void PowerUp(int powerState)
     {
         if (powerState != 0)
-        {
             ChangeState(powerState);
-        }
     }
 
     private void ChangeState(int newState)
@@ -347,10 +315,10 @@ public class PlayerController : MonoBehaviour {
         {
             case 0:
                 transform.position = transform.position + new Vector3(0f, -0.5f);
+
                 foreach (CapsuleCollider2D col in cols)
-                {
                     col.size = new Vector2(0.6f, 1f);
-                }
+
                 raycastOffsetY = 0f;
                 raycastOffsetX = 0.2f;
                 break;
@@ -360,9 +328,8 @@ public class PlayerController : MonoBehaviour {
                     transform.position = transform.position + new Vector3(0f, 0.5f);
 
                 foreach (CapsuleCollider2D col in cols)
-                {
                     col.size = new Vector2(1f, 2f);
-                }
+
                 raycastOffsetY = -0.5f;
                 raycastOffsetX = 0.4f;
                 break;
@@ -375,5 +342,35 @@ public class PlayerController : MonoBehaviour {
 
         startPosition = transform.position;
         endPosition = startPosition + new Vector3(0f, maxHeight);
+    }
+
+    private void DeathAnimation()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        foreach (CapsuleCollider2D col in cols)
+            col.enabled = false;
+
+        sr.sprite = dyingSprite;
+
+        if (dieTime != 2)
+            transform.position = Vector3.Lerp(startPosition, endPosition, floatUpTimer);
+
+        if (floatUpTimer < 1f)
+            floatUpTimer += Time.deltaTime / floatUpDelay;
+        else if (dieTime == 2)
+        {
+            floatUpTimer = 0f;
+            dieTime--;
+        }
+        else if (dieTime == 1)
+        {
+            startPosition = endPosition;
+            endPosition = new Vector3(transform.position.x, -5f);
+            floatUpTimer = 0f;
+            dieTime--;
+        }
+        else
+            GameManager.instance.GameOver();
     }
 }

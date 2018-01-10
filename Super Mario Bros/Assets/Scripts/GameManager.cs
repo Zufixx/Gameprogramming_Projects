@@ -8,29 +8,51 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+    [Header("Screen")]
+    [SerializeField]
+    private int resolutionX = 1024;
+    [SerializeField]
+    private int resolutionY = 896;
+    [Header("Keys")]
+    [SerializeField]
+    private KeyCode resetKey;
+    [SerializeField]
+    private KeyCode quitKey;
 
-        Screen.SetResolution(1024, 896, true);
+    private void Awake()
+    {
+        CreateSingleton();
+        SetStartResolution(resolutionX, resolutionY);
     }
 
-    void Update () {
-		if(Input.GetKeyDown(KeyCode.R))
-        {
+    private void Update () {
+        RestartKey();
+        QuitKey();
+    }
+
+    private void CreateSingleton()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    private void SetStartResolution(int resX, int resY)
+    {
+        Screen.SetResolution(resX, resY, true);
+    }
+
+    private void RestartKey()
+    {
+        if (Input.GetKeyDown(resetKey))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+    }
+
+    private void QuitKey()
+    {
+        if (Input.GetKeyDown(quitKey))
             Application.Quit();
-        }
     }
 
     public void GameOver()

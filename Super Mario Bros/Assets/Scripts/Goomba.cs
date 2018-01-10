@@ -23,8 +23,27 @@ public class Goomba : MonoBehaviour {
     [SerializeField]
     private Sprite deadSprite;
 
-	// Use this for initialization
-	void Start () {
+	private void Start ()
+    {
+        Initialize();
+    }
+	
+	private void Update ()
+    {
+        CamDistActivation();
+	}
+
+    private void FixedUpdate()
+    {
+        if (isActivated && isAlive)
+        {
+            Movement();
+            RaycastPathFinding();
+        }
+    }
+
+    private void Initialize()
+    {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         ft = GetComponent<FlipTimer>();
@@ -32,9 +51,9 @@ public class Goomba : MonoBehaviour {
         cam = GameObject.Find("Main Camera").transform;
         Physics2D.IgnoreCollision(cam.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void CamDistActivation()
+    {
         camDistance = transform.position.x - cam.position.x;
         if (!isActivated && camDistance < 10f)
         {
@@ -45,41 +64,36 @@ public class Goomba : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-	}
+    }
 
-    private void FixedUpdate()
+    private void Movement()
     {
-        if (isActivated && isAlive)
+        if (goingLeft)
+            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+    }
+
+    private void RaycastPathFinding()
+    {
+        Vector3 rayOrigin;
+        if (goingLeft)
+            rayOrigin = transform.position + new Vector3(-0.55f, 0f);
+        else
+            rayOrigin = transform.position + new Vector3(0.55f, 0f);
+
+        Vector3 rayDirection = rb.velocity;
+        float rayDistance = 0.1f;
+        LayerMask layer = 1 << 0;
+
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, layer);
+        Color color = hit ? Color.green : Color.red;
+        Debug.DrawRay(rayOrigin, rayDirection, color);
+
+        if (hit.collider != null)
         {
-            if (goingLeft)
-                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            else
-                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-
-            // Raycasting variables
-            Vector3 rayOrigin;
-            if (goingLeft)
-                rayOrigin = transform.position + new Vector3(-0.55f, 0f);
-            else
-            {
-                rayOrigin = transform.position + new Vector3(0.55f, 0f);
-            }
-            Vector3 rayDirection = rb.velocity;
-            float rayDistance = 0.1f;
-            LayerMask layer = 1 << 0;
-
-            // Shoot ray down from player
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, layer);
-            Color color = hit ? Color.green : Color.red;
-            Debug.DrawRay(rayOrigin, rayDirection, color);
-
-            if(hit.collider != null)
-            {
-                if(hit.transform.tag == "Player")
-                    hit.transform.gameObject.GetComponent<PlayerController>().Hit();
-                else
-                    goingLeft = !goingLeft;
-            }
+            if (hit.transform.tag != "Player")
+                goingLeft = !goingLeft;
         }
     }
 
@@ -91,11 +105,14 @@ public class Goomba : MonoBehaviour {
         }
         else if (collision.transform.tag == "Player")
         {
-            float distanceY = Mathf.Abs(transform.position.y - collision.transform.position.y);
-            if (distanceY < 0.5f)
-            {
+            float distanceY =  collision.transform.position.y - transform.position.y;
+            GameObject player = collision.gameObject;
+            int state = player.GetComponent<PlayerController>().state;
+            Debug.Log("Distance Y: " + distanceY);
+            if (state == 0 && distanceY < 0.5f)
                 collision.gameObject.GetComponent<PlayerController>().Hit();
-            }
+            else if(state != 0 && distanceY < 1f)
+                collision.gameObject.GetComponent<PlayerController>().Hit();
         }
     }
 

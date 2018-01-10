@@ -15,15 +15,25 @@ public class SpriteSequence : MonoBehaviour {
 
     private void Start()
     {
+        Initialize();
+    }
+
+    private void Update ()
+    {
+        SpriteTimer();
+	}
+
+    private void Initialize()
+    {
         startInterval = interval;
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = sprites[index];
     }
 
-    // Update is called once per frame
-    void Update () {
+    private void SpriteTimer()
+    {
         interval -= Time.deltaTime;
-        if(interval <= 0f)
+        if (interval <= 0f)
         {
             if (index < sprites.Length - 1)
                 index++;
@@ -33,5 +43,5 @@ public class SpriteSequence : MonoBehaviour {
             sr.sprite = sprites[index];
             interval = startInterval;
         }
-	}
+    }
 }

@@ -8,19 +8,25 @@ public class CoinScript : MonoBehaviour {
     private float floatUpDelay = 1f;
     [SerializeField]
     private float maxHeight = 4f;
+    [SerializeField]
+    private float minHeight = 1f;
 
     private float floatUpTimer = 0f;
     private Vector3 startPosition;
     private Vector3 endPosition;
 
-    // Use this for initialization
-    void Start () {
+    private void Start ()
+    {
         startPosition = transform.position;
         endPosition = startPosition + new Vector3(0f, maxHeight);
     }
 	
-	// Update is called once per frame
-	void Update ()
+	private void Update ()
+    {
+        BounceLerp();
+    }
+
+    private void BounceLerp()
     {
         transform.position = Vector3.Lerp(startPosition, endPosition, floatUpTimer);
 
@@ -28,11 +34,11 @@ public class CoinScript : MonoBehaviour {
         {
             floatUpTimer += Time.deltaTime / floatUpDelay;
         }
-        else if(endPosition == startPosition + new Vector3(0f, maxHeight))
+        else if (endPosition == startPosition + new Vector3(0f, maxHeight))
         {
             Vector3 temp = startPosition;
             startPosition = endPosition;
-            endPosition = temp + new Vector3(0f, 1f);
+            endPosition = temp + new Vector3(0f, minHeight);
             floatUpTimer = 0f;
         }
         else

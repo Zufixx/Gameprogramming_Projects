@@ -13,21 +13,15 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float offset = 3f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
     private void FixedUpdate()
     {
+        FollowPlayer();
+    }
+
+    private void FollowPlayer()
+    {
         distance = player.position.x - transform.position.x + offset;
-        if (distance > 0f)
-        {
+        if (distance > 0.2f)
             transform.Translate(new Vector2(distance / followSpeed, 0.0f), Space.Self);
-        }
     }
 }
